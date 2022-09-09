@@ -44,9 +44,9 @@
                     <div class="form-group">
                         <label for="wilayah">Wilayah</label>
                         <select name="wilayah" id="wilayah" class="form-control input-sm">
-                            <option value="Wilayah 1 : Sumatera">Wilayah 1 : Sumatera</option>
-                            <option value="Wilayah 2 : Banten, DKI, Jabar">Wilayah 2 : Banten, DKI, Jabar</option>
-                            <option value="Wilayah 3 : Selain 1 dan 2">Wilayah 3 : Selain 1 dan 2</option>
+                            <option value="1">Wilayah 1 : Sumatera</option>
+                            <option value="2">Wilayah 2 : Banten, DKI, Jabar</option>
+                            <option value="3">Wilayah 3 : Selain 1 dan 2</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -121,7 +121,7 @@
                             <td rowspan="2" valign="top">Wilayah</td>
  			</tr>
  			<tr>
-                            <td> = <span id="wil"></span></td>
+                            <td> = <span id="wila"></span></td>
                         </tr>
                             <td rowspan="2" valign="top">Merk / Produksi</td>
  			</tr>
@@ -170,6 +170,15 @@
  			<tr>
                             <td> = Rp <strong><span id="efr"></span></strong></td>
                         </tr>
+            <tr>
+                            <td rowspan="1" valign="top">Biaya - Biaya</td>
+ 			</tr>
+             <tr>
+                         <td rowspan="2" valign="top">Assuransi Sinarmas</td>
+            </tr>
+            <tr>
+                            <td> = Rp <strong><span id="ass"></span></strong></td>
+            </tr>
 
                     </tbody>
                 </table>
@@ -187,7 +196,7 @@ function process(e)
     if (!e) e = window.event;
     e.preventDefault();
 
-<!--part 1-->
+
     var jns_mbl  = document.getElementById('jns_mbl').value;
     var jk_wkt  = document.getElementById('jk_wkt').value;
     var wilayah  = document.getElementById('wilayah').value;
@@ -198,7 +207,7 @@ function process(e)
     var uang_muka_persen = parseInt(document.getElementById('uang_muka_persen').value);
     const LIMIT = 40;
 
-<!--part 2-->
+
     var jm = jns_mbl;
     var jk = jk_wkt;
     var wil = wilayah;
@@ -233,10 +242,78 @@ function process(e)
     var pmt6 = ((- efr6 * (tb * pvif6 + 0) / (pvif6 - 1)) * -1).toFixed(2);
     var pmt7 = ((- efr7 * (tb * pvif7 + 0) / (pvif7 - 1)) * -1).toFixed(2);
     var pmt8 = ((- efr8 * (tb * pvif8 + 0) / (pvif8 - 1)) * -1).toFixed(2);
+    var deper1 = otr * (100 / 100);
+    var deper2 = otr * (85 / 100);
+    var deper3 = otr * (75 / 100);
+    var deper4 = otr * (70 / 100);
+    var deper5 = otr * (65 / 100);
+    var deper6 = otr * (60 / 100);
+    var deper7 = otr * (60 / 100);
+    var deper8 = otr * (60 / 100);
+    var wil1th1 = deper1 * (3.82 / 100);
+    var wil1th2 = deper2 * (3.82 / 100);
+    var wil1th3 = deper3 * (0.47 / 100);
+    var wil1th4 = deper4 * (0.47 / 100);
+    var wil1th5 = deper5 * (0.47 / 100);
+    var wil1th6 = deper6 * (0.47 / 100);
+    var wil1th7 = deper7 * (0.47 / 100);
+    var wil1th8 = deper8 * (0.47 / 100);
+    var wil2th1 = deper1 * (3.26 / 100);
+    var wil2th2 = deper2 * (3.26 / 100);
+    var wil2th3 = deper3 * (0.65 / 100);
+    var wil2th4 = deper4 * (0.65 / 100);
+    var wil2th5 = deper5 * (0.65 / 100);
+    var wil2th6 = deper6 * (0.65 / 100);
+    var wil2th7 = deper7 * (0.65 / 100);
+    var wil2th8 = deper8 * (0.65 / 100);
+    var wil3th1 = deper1 * (2.53 / 100);
+    var wil3th2 = deper2 * (2.53 / 100);
+    var wil3th3 = deper3 * (0.51 / 100);
+    var wil3th4 = deper4 * (0.51 / 100);
+    var wil3th5 = deper5 * (0.51 / 100);
+    var wil3th6 = deper6 * (0.51 / 100);
+    var wil3th7 = deper7 * (0.51 / 100);
+    var wil3th8 = deper8 * (0.51 / 100);
+    var ass1 = wil1th1;
+    var ass2 = wil2th1;
+    var ass3 = wil3th1;
+    var ass4 = wil1th1 + wil1th2;
+    var ass5 = wil2th1 + wil2th2;
+    var ass6 = wil3th1 + wil3th2;
+    var ass7 = wil1th1 + wil1th2 + wil1th3;
+    var ass8 = wil2th1 + wil2th2 + wil2th3;
+    var ass9 = wil3th1 + wil3th2 + wil3th3;
+    var ass10 = wil1th1 + wil1th2 + wil1th3 + wil1th4;
+    var ass11 = wil2th1 + wil2th2 + wil2th3 + wil2th4;
+    var ass12 = wil3th1 + wil3th2 + wil3th3 + wil3th4;
+    var ass13 = wil1th1 + wil1th2 + wil1th3 + wil1th4 + wil1th5;
+    var ass14 = wil2th1 + wil2th2 + wil2th3 + wil2th4 + wil2th5;
+    var ass15 = wil3th1 + wil3th2 + wil3th3 + wil3th4 + wil3th5;
+    var ass16 = wil1th1 + wil1th2 + wil1th3 + wil1th4 + wil1th5 + wil1th6;
+    var ass17 = wil2th1 + wil2th2 + wil2th3 + wil2th4 + wil2th5 + wil2th6;
+    var ass18 = wil3th1 + wil3th2 + wil3th3 + wil3th4 + wil3th5 + wil3th6;
+    var ass19 = wil1th1 + wil1th2 + wil1th3 + wil1th4 + wil1th5 + wil1th6 + wil1th7;
+    var ass20 = wil2th1 + wil2th2 + wil2th3 + wil2th4 + wil2th5 + wil2th6 + wil2th7;
+    var ass21 = wil3th1 + wil3th2 + wil3th3 + wil3th4 + wil3th5 + wil3th6 + wil3th7;
+    var ass22 = wil1th1 + wil1th2 + wil1th3 + wil1th4 + wil1th5 + wil1th6 + wil1th7 + wil1th8;
+    var ass23 = wil2th1 + wil2th2 + wil2th3 + wil2th4 + wil2th5 + wil2th6 + wil2th7 + wil2th8;
+    var ass24 = wil3th1 + wil3th2 + wil3th3 + wil3th4 + wil3th5 + wil3th6 + wil3th7 + wil3th8;
+    
+
+
+    if (wil == 1) {
+        wila = "Wilayah 1 : Sumatera";
+    } else if (wil == 2) {
+        wila = "Wilayah 2 : Banten, DKI, Jabar";
+    } else if (wil == 3) {
+        wila = "Wilayah 3 : Selain 1 dan 2";
+    } else {
+        wila = "Wilayah 1 : Sumatera";
+    }
+    document.getElementById('wila').innerHTML = wila;
 
 
 
-<!--fungsi-->
     if (jk == 12) {
         efr = pmt1;
     } else if (jk == 24) {
@@ -258,10 +335,63 @@ function process(e)
     }
     document.getElementById('efr').innerHTML = addCommas(efr);
 
-<!--part 3-->
+
+    if (jk == 12 && wil == 1) {
+        ass = ass1;
+    } else if (jk == 12 && wil == 2) {
+        ass = ass2.toFixed(2);
+    } else if (jk == 12 && wil == 3) {
+        ass = ass3;
+    } else if (jk == 24 && wil == 1) {
+        ass = ass4;
+    } else if (jk == 24 && wil == 2) {
+        ass = ass5.toFixed(2);
+    } else if (jk == 24 && wil == 3) {
+        ass = ass6;
+    } else if (jk == 36 && wil == 1) {
+        ass = ass7;
+    } else if (jk == 36 && wil == 2) {
+        ass = ass8.toFixed(2);
+    } else if (jk == 36 && wil == 3) {
+        ass = ass9;
+    } else if (jk == 48 && wil == 1) {
+        ass = ass10;
+    } else if (jk == 48 && wil == 2) {
+        ass = ass11.toFixed(2);
+    } else if (jk == 48 && wil == 3) {
+        ass = ass12;
+    } else if (jk == 60 && wil == 1) {
+        ass = ass13;
+    } else if (jk == 60 && wil == 2) {
+        ass = ass14.toFixed(2);
+    } else if (jk == 60 && wil == 3) {
+        ass = ass15;
+    } else if (jk == 72 && wil == 1) {
+        ass = ass16;
+    } else if (jk == 72 && wil == 2) {
+        ass = ass17.toFixed(2);
+    } else if (jk == 72 && wil == 3) {
+        ass = ass18;
+    } else if (jk == 84 && wil == 1) {
+        ass = ass19;
+    } else if (jk == 84 && wil == 2) {
+        ass = ass20.toFixed(2);
+    } else if (jk == 84 && wil == 3) {
+        ass = ass21;
+    } else if (jk == 96 && wil == 1) {
+        ass = ass22;
+    } else if (jk == 96 && wil == 2) {
+        ass = ass23.toFixed(2);
+    } else if (jk == 96 && wil == 3) {
+        ass = ass24;
+    } else {
+        ass = wil1th1;
+    }
+    document.getElementById('ass').innerHTML = addCommas(ass);
+
+
     document.getElementById('jm').innerHTML = jns_mbl;
     document.getElementById('jk').innerHTML = jk_wkt;
-    document.getElementById('wil').innerHTML = wilayah;
     document.getElementById('mk').innerHTML = merk;
     document.getElementById('pk').innerHTML = pekerjaan;
     document.getElementById('price').innerHTML = addCommas(pricelist);
@@ -269,6 +399,7 @@ function process(e)
     document.getElementById('otr').innerHTML = addCommas(otr);
     document.getElementById('um').innerHTML = addCommas(um);
     document.getElementById('tb').innerHTML = addCommas(tb);
+    document.getElementById('jm').innerHTML = deper1;
 
 }
 
