@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Simulasi BCA Syariah</title>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <div class="container">
+        <h2>SIMULASI KKB - Bisnis Ritel Konsumer -</h2>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6">
+                <h3>Input Data</h3>
+                <form method="post" onsubmit="return process()">
+                    <div class="form-group">
+                        <label for="jns_mbl">Jenis mobil</label>
+                        <select name="jns_mbl" id="jns_mbl" class="form-control input-sm">
+                            <option value="Baru">Baru</option>
+                            <option value="Bekas">Bekas</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="jk_wkt">Jangka Waktu (tahun)</label>
+                        <select name="jk_wkt" id="jk_wkt" class="form-control input-sm">
+                            <option value="1 tahun">1 tahun</option>
+                            <option value="2 tahun">2 tahun</option>
+                            <option value="3 tahun">3 tahun</option>
+                            <option value="4 tahun">4 tahun</option>
+                            <option value="5 tahun">5 tahun</option>
+                            <option value="6 tahun">6 tahun</option>
+                            <option value="7 tahun">7 tahun</option>
+                            <option value="8 tahun">8 tahun</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="wilayah">Wilayah</label>
+                        <select name="wilayah" id="wilayah" class="form-control input-sm">
+                            <option value="Wilayah 1">Wilayah 1</option>
+                            <option value="Wilayah 2">Wilayah 2</option>
+                            <option value="Wilayah 3">Wilayah 3</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="merk">Merk / Produksi</label>
+                        <select name="merk" id="merk" class="form-control input-sm">
+                            <option value="New Avanza">New Avanza</option>
+                            <option value="New Veloz">New Veloz</option>
+                            <option value="All New Innova">All New Innova</option>
+                            <option value="All New Fortuner">All New Fortuner</option>
+                            <option value="Rush">Rush</option>
+                            <option value="New Jazz">New Jazz</option>
+                            <option value="HRV">HRV</option>
+                            <option value="CRV">CRV</option>
+                            <option value="Mobilio">Mobilio</option>
+                            <option value="Xpander">Xpander</option>
+                            <option value="New Pajero Sport">New Pajero Sport</option>
+                            <option value="Xenia">Xenia</option>
+                            <option value="All New Terios">All New Terios</option>
+                            <option value="All New Ertiga">All New Ertiga</option>
+                            <option value="Suzuki Lainnya">Suzuki Lainnya</option>
+                            <option value="Toyota Lainnya">Toyota Lainnya</option>
+                            <option value="Daihatsu Lainnya">Daihatsu Lainnya</option>
+                            <option value="Honda Lainnya">Honda Lainnya</option>
+                            <option value="Merk Jepang lain dan non Jepang">Merk Jepang lain dan non Jepang</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="pekerjaan">Pekerjaan</label>
+                        <select name="pekerjaan" id="pekerjaan" class="form-control input-sm">
+                            <option value="Karyawan">Karyawan</option>
+                            <option value="Wiraswasta">Wiraswasta</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="pricelist">Harga Pricelist (Showroom)</label>
+                        <input type="number" name="pricelist" id="pricelist" class="form-control input-sm" required="required" autofocus placeholder="Contoh : 300000000" />
+                    </div>
+                    <div class="form-group">
+                        <label for="discount">Discount Dealer/Showroom</label>
+                        <input type="number" name="discount" id="discount" class="form-control input-sm" required="required" autofocus placeholder="Contoh : 300000000" />
+                    </div>
+                    <div class="form-group">
+                        <label for="uang_muka_persen">Uang Muka (minimal 40% (dalam %))</label>
+                        <input type="number" name="uang_muka_persen" min="1" id="uang_muka_persen" class="form-control input-sm" required="required" placeholder="Contoh : 40" />
+                    </div>
+
+
+                
+                
+
+                    <button type="submit" class="btn btn-primary btn-md col-xs-12">HITUNG CICILAN</button>
+                </form>
+            </div>
+            <div class="col-xs-16 col-sm-16 col-lg-6 col-md-6">
+                <h3>Hasil Simulasi</h3>
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td rowspan="2" valign="top">Jenis mobil </td>
+ 			</tr>
+ 			<tr>
+                            <td> = <span id="jm"></span></td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2" valign="top">Jangka Waktu (tahun)</td>
+ 			</tr>
+ 			<tr>
+                            <td> = <span id="jk"></span></td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2" valign="top">Wilayah</td>
+ 			</tr>
+ 			<tr>
+                            <td> = <span id="wil"></span></td>
+                        </tr>
+                            <td rowspan="2" valign="top">Merk / Produksi</td>
+ 			</tr>
+ 			<tr>
+                            <td> = <span id="mk"></span></td>
+                        </tr>
+ 			<tr>
+                            <td rowspan="2" valign="top">Pekerjaan</td>
+ 			</tr>
+ 			<tr>
+                            <td> = <span id="pk"></span></td>
+                        </tr>
+ 			<tr>
+                            <td rowspan="2" valign="top">Harga Pricelist (Showroom)</td>
+ 			</tr>
+ 			<tr>
+                            <td> = Rp <span id="price"></span></td>
+                        </tr>
+ 			<tr>
+                            <td rowspan="2" valign="top">Discount Dealer/Showroom</td>
+ 			</tr>
+ 			<tr>
+                            <td> = Rp <span id="disc"></span></td>
+                        </tr>
+ 			<tr>
+                            <td rowspan="2" valign="top">Harga OTR</td>
+ 			</tr>
+ 			<tr>
+                            <td> = Rp <strong><span id="otr"></span></strong></td>
+                        </tr>
+ 			<tr>
+                            <td rowspan="2" valign="top">Uang Muka</td>
+ 			</tr>
+ 			<tr>
+                            <td> = Rp <strong><span id="um"></span></strong></td>
+                        </tr>
+			<tr>
+                            <td rowspan="2" valign="top">Total Pembiayaan</td>
+ 			</tr>
+ 			<tr>
+                            <td> = Rp <strong><span id="tb"></span></strong></td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <hr />
+
+
+
+    </div> <!-- /container -->
+
+<script type="text/javascript">
+function process(e)
+{
+    if (!e) e = window.event;
+    e.preventDefault();
+
+//part 1
+    var jns_mbl  = document.getElementById('jns_mbl').value;
+    var jk_wkt  = document.getElementById('jk_wkt').value;
+    var wilayah  = document.getElementById('wilayah').value;
+    var merk  = document.getElementById('merk').value;
+    var pekerjaan  = document.getElementById('pekerjaan').value;
+    var pricelist  = parseInt(document.getElementById('pricelist').value);
+    var discount  = parseInt(document.getElementById('discount').value);
+    var uang_muka_persen = parseInt(document.getElementById('uang_muka_persen').value);
+    const LIMIT = 40;
+
+//part 2
+    var jm = jns_mbl;
+    var jk = jk_wkt;
+    var wil = wilayah;
+    var mk = merk;
+    var pk = pekerjaan;
+    var price = pricelist;
+    var disc = discount;    
+    var otr = pricelist - discount;    
+    var um = pricelist * (uang_muka_persen / 100);    
+    var tb = pricelist - um;    
+
+//part 3
+    document.getElementById('jm').innerHTML = jns_mbl;
+    document.getElementById('jk').innerHTML = jk_wkt;
+    document.getElementById('wil').innerHTML = wilayah;
+    document.getElementById('mk').innerHTML = merk;
+    document.getElementById('pk').innerHTML = pekerjaan;
+    document.getElementById('price').innerHTML = addCommas(pricelist);
+    document.getElementById('disc').innerHTML = addCommas(discount);
+    document.getElementById('otr').innerHTML = addCommas(otr);
+    document.getElementById('um').innerHTML = addCommas(um);
+    document.getElementById('tb').innerHTML = addCommas(tb);
+}
+
+function addCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+</script>
+
+</body>
+</html>
