@@ -92,6 +92,10 @@
                         <label for="uang_muka_persen">Uang Muka (minimal 20% (dalam %))</label>
                         <input type="number" name="uang_muka_persen" min="1" id="uang_muka_persen" class="form-control input-sm" required="required" placeholder="Contoh : 20" />
                     </div>
+                    <div class="form-group">
+                        <label for="by_polis">Biaya Polis dan Materai</label>
+                        <input type="number" name="by_polis" min="1" id="by_polis" class="form-control input-sm" required="required" placeholder="Contoh : 8000" />
+                    </div>
 
 
                 
@@ -179,6 +183,30 @@
             <tr>
                             <td> = Rp <strong><span id="ass"></span></strong></td>
             </tr>
+             <tr>
+                         <td rowspan="2" valign="top">Assuransi Reliance</td>
+            </tr>
+            <tr>
+                            <td> = Rp <strong><span id="relia"></span></strong></td>
+            </tr>
+             <tr>
+                         <td rowspan="2" valign="top">Biaya Admin</td>
+            </tr>
+            <tr>
+                            <td> = Rp <strong><span id="adm"></span></strong></td>
+            </tr>
+             <tr>
+                         <td rowspan="2" valign="top">Biaya Polis dan Materai</td>
+            </tr>
+            <tr>
+                            <td> = Rp <strong><span id="poll"></span></strong></td>
+            </tr>
+             <tr>
+                         <td rowspan="2" valign="top">Total TDP</td>
+            </tr>
+            <tr>
+                            <td> = Rp <strong><span id="tdp"></span></strong></td>
+            </tr>
 
                     </tbody>
                 </table>
@@ -205,6 +233,7 @@ function process(e)
     var pricelist  = parseInt(document.getElementById('pricelist').value);
     var discount  = parseInt(document.getElementById('discount').value);
     var uang_muka_persen = parseInt(document.getElementById('uang_muka_persen').value);
+    var by_polis = parseInt(document.getElementById('by_polis').value);
     const LIMIT = 40;
 
 
@@ -217,6 +246,7 @@ function process(e)
     var disc = discount;    
     var otr = pricelist - discount;    
     var um = pricelist * (uang_muka_persen / 100);    
+    var poll = by_polis;    
     var tb = otr - um;
     var efr1 = 0.04130 / 12;
     var efr2 = 0.06120 / 12;
@@ -298,9 +328,24 @@ function process(e)
     var ass22 = wil1th1 + wil1th2 + wil1th3 + wil1th4 + wil1th5 + wil1th6 + wil1th7 + wil1th8;
     var ass23 = wil2th1 + wil2th2 + wil2th3 + wil2th4 + wil2th5 + wil2th6 + wil2th7 + wil2th8;
     var ass24 = wil3th1 + wil3th2 + wil3th3 + wil3th4 + wil3th5 + wil3th6 + wil3th7 + wil3th8;
-    
-
-
+    var asr1 = 0.4300;
+    var asr2 = 0.5680;
+    var asr3 = 0.7100;
+    var asr4 = 0.8880;
+    var asr5 = 1.2900;
+    var asr6 = 1.4190;
+    var asr7 = 1.5180;
+    var asr8 = 1.6700;
+    var asrh1 = (asr1 * tb) / 100;
+    var asrh2 = (asr2 * tb) / 100;
+    var asrh3 = (asr3 * tb) / 100;
+    var asrh4 = (asr4 * tb) / 100;
+    var asrh5 = (asr5 * tb) / 100;
+    var asrh6 = (asr6 * tb) / 100;
+    var asrh7 = (asr7 * tb) / 100;
+    var asrh8 = (asr8 * tb) / 100;
+    var adm = tb / 100;
+ 
     if (wil == 1) {
         wila = "Wilayah 1 : Sumatera";
     } else if (wil == 2) {
@@ -337,58 +382,78 @@ function process(e)
 
 
     if (jk == 12 && wil == 1) {
-        ass = ass1;
+        ass = ass1.toFixed(2);
     } else if (jk == 12 && wil == 2) {
         ass = ass2.toFixed(2);
     } else if (jk == 12 && wil == 3) {
-        ass = ass3;
+        ass = ass3.toFixed(2);
     } else if (jk == 24 && wil == 1) {
-        ass = ass4;
+        ass = ass4.toFixed(2);
     } else if (jk == 24 && wil == 2) {
         ass = ass5.toFixed(2);
     } else if (jk == 24 && wil == 3) {
-        ass = ass6;
+        ass = ass6.toFixed(2);
     } else if (jk == 36 && wil == 1) {
-        ass = ass7;
+        ass = ass7.toFixed(2);
     } else if (jk == 36 && wil == 2) {
         ass = ass8.toFixed(2);
     } else if (jk == 36 && wil == 3) {
-        ass = ass9;
+        ass = ass9.toFixed(2);
     } else if (jk == 48 && wil == 1) {
-        ass = ass10;
+        ass = ass10.toFixed(2);
     } else if (jk == 48 && wil == 2) {
         ass = ass11.toFixed(2);
     } else if (jk == 48 && wil == 3) {
-        ass = ass12;
+        ass = ass12.toFixed(2);
     } else if (jk == 60 && wil == 1) {
-        ass = ass13;
+        ass = ass13.toFixed(2);
     } else if (jk == 60 && wil == 2) {
         ass = ass14.toFixed(2);
     } else if (jk == 60 && wil == 3) {
-        ass = ass15;
+        ass = ass15.toFixed(2);
     } else if (jk == 72 && wil == 1) {
-        ass = ass16;
+        ass = ass16.toFixed(2);
     } else if (jk == 72 && wil == 2) {
         ass = ass17.toFixed(2);
     } else if (jk == 72 && wil == 3) {
-        ass = ass18;
+        ass = ass18.toFixed(2);
     } else if (jk == 84 && wil == 1) {
-        ass = ass19;
+        ass = ass19.toFixed(2);
     } else if (jk == 84 && wil == 2) {
         ass = ass20.toFixed(2);
     } else if (jk == 84 && wil == 3) {
-        ass = ass21;
+        ass = ass21.toFixed(2);
     } else if (jk == 96 && wil == 1) {
-        ass = ass22;
+        ass = ass22.toFixed(2);
     } else if (jk == 96 && wil == 2) {
         ass = ass23.toFixed(2);
     } else if (jk == 96 && wil == 3) {
-        ass = ass24;
+        ass = ass24.toFixed(2);
     } else {
         ass = wil1th1;
     }
     document.getElementById('ass').innerHTML = addCommas(ass);
 
+     if (jk == 12) {
+        relia = asrh1.toFixed(2);
+    } else if (jk == 24) {
+        relia = asrh2.toFixed(2);
+    } else if (jk == 36) {
+        relia = asrh3.toFixed(2);
+    } else if (jk == 48) {
+        relia = asrh4.toFixed(2);
+    } else if (jk == 60) {
+        relia = asrh5.toFixed(2);
+    } else if (jk == 72) {
+        relia = asrh6.toFixed(2);
+    } else if (jk == 84) {
+        relia = asrh7.toFixed(2);
+    } else if (jk == 96) {
+        relia = asrh8.toFixed(2);
+    } else {
+        relia = asrh1.toFixed(2);
+    }
+    document.getElementById('relia').innerHTML = addCommas(relia);
 
     document.getElementById('jm').innerHTML = jns_mbl;
     document.getElementById('jk').innerHTML = jk_wkt;
@@ -400,6 +465,11 @@ function process(e)
     document.getElementById('um').innerHTML = addCommas(um);
     document.getElementById('tb').innerHTML = addCommas(tb);
     document.getElementById('jm').innerHTML = deper1;
+    document.getElementById('adm').innerHTML = addCommas(adm);
+    document.getElementById('poll').innerHTML = addCommas(poll);
+
+    var tdp = um + parseInt(ass) + parseInt(relia) + adm + poll;
+    document.getElementById('tdp').innerHTML = addCommas(tdp);
 
 }
 
