@@ -245,7 +245,7 @@ function process(e)
     var price = pricelist;
     var disc = discount;    
     var otr = pricelist - discount;    
-    var um = pricelist * (uang_muka_persen / 100);    
+    var um = otr * (uang_muka_persen / 100);    
     var poll = by_polis;    
     var tb = otr - um;
     var efr1 = 0.04130 / 12;
