@@ -93,14 +93,18 @@
                         <input type="number" name="uang_muka_persen" min="1" id="uang_muka_persen" class="form-control input-sm" required="required" placeholder="Contoh : 20" />
                     </div>
                     <div class="form-group">
+                        <label for="tipe_assuransi">Tipe Assuransi</label>
+                        <select name="tipe_assuransi" id="tipe_assuransi" class="form-control input-sm">
+                            <option value="1">All Risk</option>
+                            <option value="2">All TLO</option>
+                            <option value="3">Combine</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label for="by_polis">Biaya Polis dan Materai</label>
                         <input type="number" name="by_polis" min="1" id="by_polis" class="form-control input-sm" required="required" placeholder="Contoh : 8000" />
                     </div>
-
-
-                
-                
-
+              
                     <button type="submit" class="btn btn-primary btn-md col-xs-12">HITUNG CICILAN</button>
                 </form>
             </div>
@@ -181,7 +185,7 @@
                          <td rowspan="2" valign="top">Assuransi Sinarmas</td>
             </tr>
             <tr>
-                            <td> = Rp <strong><span id="ass"></span></strong></td>
+                            <td> = Rp <strong><span id="fass"></span></strong></td>
             </tr>
              <tr>
                          <td rowspan="2" valign="top">Assuransi Reliance</td>
@@ -207,7 +211,6 @@
             <tr>
                             <td> = Rp <strong><span id="tdp"></span></strong></td>
             </tr>
-
                     </tbody>
                 </table>
         </div>
@@ -234,6 +237,7 @@ function process(e)
     var discount  = parseInt(document.getElementById('discount').value);
     var uang_muka_persen = parseInt(document.getElementById('uang_muka_persen').value);
     var by_polis = parseInt(document.getElementById('by_polis').value);
+    var tipe_assuransi = document.getElementById('tipe_assuransi').value;
     const LIMIT = 40;
 
 
@@ -244,108 +248,17 @@ function process(e)
     var pk = pekerjaan;
     var price = pricelist;
     var disc = discount;    
+    var tipe_a = tipe_assuransi;
     var otr = pricelist - discount;    
     var um = otr * (uang_muka_persen / 100);    
     var poll = by_polis;    
     var tb = otr - um;
-    var efr1 = 0.04130 / 12;
-    var efr2 = 0.06120 / 12;
-    var efr3 = 0.05590 / 12;
-    var efr4 = 0.07030 / 12;
-    var efr5 = 0.08380 / 12; 
-    var efr6 = 0.08300 / 12; 
-    var efr7 = 0.08220 / 12; 
-    var efr8 = 0.08140 / 12;
-    var pvif1 = Math.pow(1 + efr1, 12);
-    var pvif2 = Math.pow(1 + efr2, 24);
-    var pvif3 = Math.pow(1 + efr3, 36);
-    var pvif4 = Math.pow(1 + efr4, 48);
-    var pvif5 = Math.pow(1 + efr5, 60);
-    var pvif6 = Math.pow(1 + efr6, 72);
-    var pvif7 = Math.pow(1 + efr7, 84);
-    var pvif8 = Math.pow(1 + efr8, 96);
-    var pmt1 = ((- efr1 * (tb * pvif1 + 0) / (pvif1 - 1)) * -1).toFixed(2);
-    var pmt2 = ((- efr2 * (tb * pvif2 + 0) / (pvif2 - 1)) * -1).toFixed(2);
-    var pmt3 = ((- efr3 * (tb * pvif3 + 0) / (pvif3 - 1)) * -1).toFixed(2);
-    var pmt4 = ((- efr4 * (tb * pvif4 + 0) / (pvif4 - 1)) * -1).toFixed(2);
-    var pmt5 = ((- efr5 * (tb * pvif5 + 0) / (pvif5 - 1)) * -1).toFixed(2);
-    var pmt6 = ((- efr6 * (tb * pvif6 + 0) / (pvif6 - 1)) * -1).toFixed(2);
-    var pmt7 = ((- efr7 * (tb * pvif7 + 0) / (pvif7 - 1)) * -1).toFixed(2);
-    var pmt8 = ((- efr8 * (tb * pvif8 + 0) / (pvif8 - 1)) * -1).toFixed(2);
-    var deper1 = otr * (100 / 100);
-    var deper2 = otr * (85 / 100);
-    var deper3 = otr * (75 / 100);
-    var deper4 = otr * (70 / 100);
-    var deper5 = otr * (65 / 100);
-    var deper6 = otr * (60 / 100);
-    var deper7 = otr * (60 / 100);
-    var deper8 = otr * (60 / 100);
-    var wil1th1 = deper1 * (3.82 / 100);
-    var wil1th2 = deper2 * (3.82 / 100);
-    var wil1th3 = deper3 * (0.47 / 100);
-    var wil1th4 = deper4 * (0.47 / 100);
-    var wil1th5 = deper5 * (0.47 / 100);
-    var wil1th6 = deper6 * (0.47 / 100);
-    var wil1th7 = deper7 * (0.47 / 100);
-    var wil1th8 = deper8 * (0.47 / 100);
-    var wil2th1 = deper1 * (3.26 / 100);
-    var wil2th2 = deper2 * (3.26 / 100);
-    var wil2th3 = deper3 * (0.65 / 100);
-    var wil2th4 = deper4 * (0.65 / 100);
-    var wil2th5 = deper5 * (0.65 / 100);
-    var wil2th6 = deper6 * (0.65 / 100);
-    var wil2th7 = deper7 * (0.65 / 100);
-    var wil2th8 = deper8 * (0.65 / 100);
-    var wil3th1 = deper1 * (2.53 / 100);
-    var wil3th2 = deper2 * (2.53 / 100);
-    var wil3th3 = deper3 * (0.51 / 100);
-    var wil3th4 = deper4 * (0.51 / 100);
-    var wil3th5 = deper5 * (0.51 / 100);
-    var wil3th6 = deper6 * (0.51 / 100);
-    var wil3th7 = deper7 * (0.51 / 100);
-    var wil3th8 = deper8 * (0.51 / 100);
-    var ass1 = wil1th1;
-    var ass2 = wil2th1;
-    var ass3 = wil3th1;
-    var ass4 = wil1th1 + wil1th2;
-    var ass5 = wil2th1 + wil2th2;
-    var ass6 = wil3th1 + wil3th2;
-    var ass7 = wil1th1 + wil1th2 + wil1th3;
-    var ass8 = wil2th1 + wil2th2 + wil2th3;
-    var ass9 = wil3th1 + wil3th2 + wil3th3;
-    var ass10 = wil1th1 + wil1th2 + wil1th3 + wil1th4;
-    var ass11 = wil2th1 + wil2th2 + wil2th3 + wil2th4;
-    var ass12 = wil3th1 + wil3th2 + wil3th3 + wil3th4;
-    var ass13 = wil1th1 + wil1th2 + wil1th3 + wil1th4 + wil1th5;
-    var ass14 = wil2th1 + wil2th2 + wil2th3 + wil2th4 + wil2th5;
-    var ass15 = wil3th1 + wil3th2 + wil3th3 + wil3th4 + wil3th5;
-    var ass16 = wil1th1 + wil1th2 + wil1th3 + wil1th4 + wil1th5 + wil1th6;
-    var ass17 = wil2th1 + wil2th2 + wil2th3 + wil2th4 + wil2th5 + wil2th6;
-    var ass18 = wil3th1 + wil3th2 + wil3th3 + wil3th4 + wil3th5 + wil3th6;
-    var ass19 = wil1th1 + wil1th2 + wil1th3 + wil1th4 + wil1th5 + wil1th6 + wil1th7;
-    var ass20 = wil2th1 + wil2th2 + wil2th3 + wil2th4 + wil2th5 + wil2th6 + wil2th7;
-    var ass21 = wil3th1 + wil3th2 + wil3th3 + wil3th4 + wil3th5 + wil3th6 + wil3th7;
-    var ass22 = wil1th1 + wil1th2 + wil1th3 + wil1th4 + wil1th5 + wil1th6 + wil1th7 + wil1th8;
-    var ass23 = wil2th1 + wil2th2 + wil2th3 + wil2th4 + wil2th5 + wil2th6 + wil2th7 + wil2th8;
-    var ass24 = wil3th1 + wil3th2 + wil3th3 + wil3th4 + wil3th5 + wil3th6 + wil3th7 + wil3th8;
-    var asr1 = 0.4300;
-    var asr2 = 0.5680;
-    var asr3 = 0.7100;
-    var asr4 = 0.8880;
-    var asr5 = 1.2900;
-    var asr6 = 1.4190;
-    var asr7 = 1.5180;
-    var asr8 = 1.6700;
-    var asrh1 = (asr1 * tb) / 100;
-    var asrh2 = (asr2 * tb) / 100;
-    var asrh3 = (asr3 * tb) / 100;
-    var asrh4 = (asr4 * tb) / 100;
-    var asrh5 = (asr5 * tb) / 100;
-    var asrh6 = (asr6 * tb) / 100;
-    var asrh7 = (asr7 * tb) / 100;
-    var asrh8 = (asr8 * tb) / 100;
     var adm = tb / 100;
  
+    
+    document.getElementById('jm').innerHTML = jns_mbl;
+    document.getElementById('jk').innerHTML = jk_wkt;
+
     if (wil == 1) {
         wila = "Wilayah 1 : Sumatera";
     } else if (wil == 2) {
@@ -355,10 +268,46 @@ function process(e)
     } else {
         wila = "Wilayah 1 : Sumatera";
     }
+
     document.getElementById('wila').innerHTML = wila;
+    document.getElementById('mk').innerHTML = merk;
+    document.getElementById('pk').innerHTML = pekerjaan;
+    document.getElementById('price').innerHTML = addCommas(pricelist);
+    document.getElementById('disc').innerHTML = addCommas(discount);
+    document.getElementById('otr').innerHTML = addCommas(otr);
+    document.getElementById('um').innerHTML = addCommas(um);
+    document.getElementById('tb').innerHTML = addCommas(tb);
 
 
-
+    var efr1 = 0.04130 / 12;
+    var efr2 = 0.06120 / 12;
+    var efr3 = 0.05590 / 12;
+    var efr4 = 0.07030 / 12;
+    var efr5 = 0.08380 / 12; 
+    var efr6 = 0.08300 / 12; 
+    var efr7 = 0.08220 / 12; 
+    var efr8 = 0.08140 / 12;
+    
+    
+    var pvif1 = Math.pow(1 + efr1, 12);
+    var pvif2 = Math.pow(1 + efr2, 24);
+    var pvif3 = Math.pow(1 + efr3, 36);
+    var pvif4 = Math.pow(1 + efr4, 48);
+    var pvif5 = Math.pow(1 + efr5, 60);
+    var pvif6 = Math.pow(1 + efr6, 72);
+    var pvif7 = Math.pow(1 + efr7, 84);
+    var pvif8 = Math.pow(1 + efr8, 96);
+    
+    
+    var pmt1 = ((- efr1 * (tb * pvif1 + 0) / (pvif1 - 1)) * -1).toFixed(2);
+    var pmt2 = ((- efr2 * (tb * pvif2 + 0) / (pvif2 - 1)) * -1).toFixed(2);
+    var pmt3 = ((- efr3 * (tb * pvif3 + 0) / (pvif3 - 1)) * -1).toFixed(2);
+    var pmt4 = ((- efr4 * (tb * pvif4 + 0) / (pvif4 - 1)) * -1).toFixed(2);
+    var pmt5 = ((- efr5 * (tb * pvif5 + 0) / (pvif5 - 1)) * -1).toFixed(2);
+    var pmt6 = ((- efr6 * (tb * pvif6 + 0) / (pvif6 - 1)) * -1).toFixed(2);
+    var pmt7 = ((- efr7 * (tb * pvif7 + 0) / (pvif7 - 1)) * -1).toFixed(2);
+    var pmt8 = ((- efr8 * (tb * pvif8 + 0) / (pvif8 - 1)) * -1).toFixed(2);
+    
     if (jk == 12) {
         efr = pmt1;
     } else if (jk == 24) {
@@ -379,60 +328,830 @@ function process(e)
         efr = pmt3;
     }
     document.getElementById('efr').innerHTML = addCommas(efr);
+   
+
+    var deper1 = otr * (100 / 100);
+    var deper2 = otr * (85 / 100);
+    var deper3 = otr * (75 / 100);
+    var deper4 = otr * (70 / 100);
+    var deper5 = otr * (65 / 100);
+    var deper6 = otr * (60 / 100);
+    var deper7 = otr * (60 / 100);
+    var deper8 = otr * (60 / 100);
 
 
-    if (jk == 12 && wil == 1) {
-        ass = ass1.toFixed(2);
-    } else if (jk == 12 && wil == 2) {
-        ass = ass2.toFixed(2);
-    } else if (jk == 12 && wil == 3) {
-        ass = ass3.toFixed(2);
-    } else if (jk == 24 && wil == 1) {
-        ass = ass4.toFixed(2);
-    } else if (jk == 24 && wil == 2) {
-        ass = ass5.toFixed(2);
-    } else if (jk == 24 && wil == 3) {
-        ass = ass6.toFixed(2);
-    } else if (jk == 36 && wil == 1) {
-        ass = ass7.toFixed(2);
-    } else if (jk == 36 && wil == 2) {
-        ass = ass8.toFixed(2);
-    } else if (jk == 36 && wil == 3) {
-        ass = ass9.toFixed(2);
-    } else if (jk == 48 && wil == 1) {
-        ass = ass10.toFixed(2);
-    } else if (jk == 48 && wil == 2) {
-        ass = ass11.toFixed(2);
-    } else if (jk == 48 && wil == 3) {
-        ass = ass12.toFixed(2);
-    } else if (jk == 60 && wil == 1) {
-        ass = ass13.toFixed(2);
-    } else if (jk == 60 && wil == 2) {
-        ass = ass14.toFixed(2);
-    } else if (jk == 60 && wil == 3) {
-        ass = ass15.toFixed(2);
-    } else if (jk == 72 && wil == 1) {
-        ass = ass16.toFixed(2);
-    } else if (jk == 72 && wil == 2) {
-        ass = ass17.toFixed(2);
-    } else if (jk == 72 && wil == 3) {
-        ass = ass18.toFixed(2);
-    } else if (jk == 84 && wil == 1) {
-        ass = ass19.toFixed(2);
-    } else if (jk == 84 && wil == 2) {
-        ass = ass20.toFixed(2);
-    } else if (jk == 84 && wil == 3) {
-        ass = ass21.toFixed(2);
-    } else if (jk == 96 && wil == 1) {
-        ass = ass22.toFixed(2);
-    } else if (jk == 96 && wil == 2) {
-        ass = ass23.toFixed(2);
-    } else if (jk == 96 && wil == 3) {
-        ass = ass24.toFixed(2);
+
+    if (deper1 < 125000001 && wil == 1 && tipe_a == 1) {
+        rdeper1 = 3.82 / 100;
+    } else if (deper1 > 125000001 && deper1 < 200000001 && wil == 1 && tipe_a == 1) {
+        rdeper1 = 2.67 / 100;
+    } else if (deper1 > 200000001 && deper1 < 400000001 && wil == 1 && tipe_a == 1) {
+        rdeper1 = 2.18 / 100;
+    } else if (deper1 > 400000001 && deper1 < 800000001 && wil == 1 && tipe_a == 1) {
+        rdeper1 = 1.20 / 100;
+    } else if (deper1 > 800000001 && wil == 1 && tipe_a == 1) {
+        rdeper1 = 1.05 / 100;
+    } else if (deper1 < 125000001 && wil == 2 && tipe_a == 1) {
+        rdeper1 = 3.26 / 100;
+    } else if (deper1 > 125000001 && deper1 < 200000001 && wil == 2 && tipe_a == 1) {
+        rdeper1 = 2.47 / 100;
+    } else if (deper1 > 200000001 && deper1 < 400000001 && wil == 2 && tipe_a == 1) {
+        rdeper1 = 2.08 / 100;
+    } else if (deper1 > 400000001 && deper1 < 800000001 && wil == 2 && tipe_a == 1) {
+        rdeper1 = 1.20 / 100;
+    } else if (deper1 > 800000001 && wil == 2 && tipe_a == 1) {
+        rdeper1 = 1.05 / 100;
+    } else if (deper1 < 125000001 && wil == 3 && tipe_a == 1) {
+        rdeper1 = 2.53 / 100;
+    } else if (deper1 > 125000001 && deper1 < 200000001 && wil == 3 && tipe_a == 1) {
+        rdeper1 = 2.69 / 100;
+    } else if (deper1 > 200000001 && deper1 < 400000001 && wil == 3 && tipe_a == 1) {
+        rdeper1 = 1.79 / 100;
+    } else if (deper1 > 400000001 && deper1 < 800000001 && wil == 3 && tipe_a == 1) {
+        rdeper1 = 1.14 / 100;
+    } else if (deper1 > 800000001 && wil == 3 && tipe_a == 1) {
+        rdeper1 = 1.05 / 100;
+    } else if (deper1 < 125000001 && wil == 1 && tipe_a == 2) {
+        rdeper1 = 0.47 / 100;
+    } else if (deper1 > 125000001 && deper1 < 200000001 && wil == 1 && tipe_a == 2) {
+        rdeper1 = 0.63 / 100;
+    } else if (deper1 > 200000001 && deper1 < 400000001 && wil == 1 && tipe_a == 2) {
+        rdeper1 = 0.41 / 100;
+    } else if (deper1 > 400000001 && deper1 < 800000001 && wil == 1 && tipe_a == 2) {
+        rdeper1 = 0.25 / 100;
+    } else if (deper1 > 800000001 && wil == 1 && tipe_a == 2) {
+        rdeper1 = 0.20 / 100;
+    } else if (deper1 < 125000001 && wil == 2 && tipe_a == 2) {
+        rdeper1 = 0.65 / 100;
+    } else if (deper1 > 125000001 && deper1 < 200000001 && wil == 2 && tipe_a == 2) {
+        rdeper1 = 0.44 / 100;
+    } else if (deper1 > 200000001 && deper1 < 400000001 && wil == 2 && tipe_a == 2) {
+        rdeper1 = 0.38 / 100;
+    } else if (deper1 > 400000001 && deper1 < 800000001 && wil == 2 && tipe_a == 2) {
+        rdeper1 = 0.25 / 100;
+    } else if (deper1 > 800000001 && wil == 2 && tipe_a == 2) {
+        rdeper1 = 0.20 / 100;
+    } else if (deper1 < 125000001 && wil == 3 && tipe_a == 2) {
+        rdeper1 = 0.51 / 100;
+    } else if (deper1 > 125000001 && deper1 < 200000001 && wil == 3 && tipe_a == 2) {
+        rdeper1 = 0.44 / 100;
+    } else if (deper1 > 200000001 && deper1 < 400000001 && wil == 3 && tipe_a == 2) {
+        rdeper1 = 0.29 / 100;
+    } else if (deper1 > 400000001 && deper1 < 800000001 && wil == 3 && tipe_a == 2) {
+        rdeper1 = 0.23 / 100;
+    } else if (deper1 > 800000001 && wil == 3 && tipe_a == 2) {
+        rdeper1 = 0.20 / 100;
+    } else if (deper1 < 125000001 && wil == 1 && tipe_a == 3) {
+        rdeper1 = 3.82 / 100;
+    } else if (deper1 > 125000001 && deper1 < 200000001 && wil == 1 && tipe_a == 3) {
+        rdeper1 = 2.67 / 100;
+    } else if (deper1 > 200000001 && deper1 < 400000001 && wil == 1 && tipe_a == 3) {
+        rdeper1 = 2.18 / 100;
+    } else if (deper1 > 400000001 && deper1 < 800000001 && wil == 1 && tipe_a == 3) {
+        rdeper1 = 1.20 / 100;
+    } else if (deper1 > 800000001 && wil == 1 && tipe_a == 3) {
+        rdeper1 = 1.05 / 100;
+    } else if (deper1 < 125000001 && wil == 2 && tipe_a == 3) {
+        rdeper1 = 3.26 / 100;
+    } else if (deper1 > 125000001 && deper1 < 200000001 && wil == 2 && tipe_a == 3) {
+        rdeper1 = 2.47 / 100;
+    } else if (deper1 > 200000001 && deper1 < 400000001 && wil == 2 && tipe_a == 3) {
+        rdeper1 = 2.08 / 100;
+    } else if (deper1 > 400000001 && deper1 < 800000001 && wil == 2 && tipe_a == 3) {
+        rdeper1 = 1.20 / 100;
+    } else if (deper1 > 800000001 && wil == 2 && tipe_a == 3) {
+        rdeper1 = 1.05 / 100;
+    } else if (deper1 < 125000001 && wil == 3 && tipe_a == 3) {
+        rdeper1 = 2.53 / 100;
+    } else if (deper1 > 125000001 && deper1 < 200000001 && wil == 3 && tipe_a == 3) {
+        rdeper1 = 2.69 / 100;
+    } else if (deper1 > 200000001 && deper1 < 400000001 && wil == 3 && tipe_a == 3) {
+        rdeper1 = 1.79 / 100;
+    } else if (deper1 > 400000001 && deper1 < 800000001 && wil == 3 && tipe_a == 3) {
+        rdeper1 = 1.14 / 100;
+    } else if (deper1 > 800000001 && wil == 3 && tipe_a == 3) {
+        rdeper1 = 1.05 / 100;
     } else {
-        ass = wil1th1;
+        rdeper1 = 0;
     }
-    document.getElementById('ass').innerHTML = addCommas(ass);
+
+    if (deper2 < 125000001 && wil == 1 && tipe_a == 1) {
+        rdeper2 = 3.82 / 100;
+    } else if (deper2 > 125000001 && deper2 < 200000001 && wil == 1 && tipe_a == 1) {
+        rdeper2 = 2.67 / 100;
+    } else if (deper2 > 200000001 && deper2 < 400000001 && wil == 1 && tipe_a == 1) {
+        rdeper2 = 2.18 / 100;
+    } else if (deper2 > 400000001 && deper2 < 800000001 && wil == 1 && tipe_a == 1) {
+        rdeper2 = 1.20 / 100;
+    } else if (deper2 > 800000001 && wil == 1 && tipe_a == 1) {
+        rdeper2 = 1.05 / 100;
+    } else if (deper2 < 125000001 && wil == 2 && tipe_a == 1) {
+        rdeper2 = 3.26 / 100;
+    } else if (deper2 > 125000001 && deper2 < 200000001 && wil == 2 && tipe_a == 1) {
+        rdeper2 = 2.47 / 100;
+    } else if (deper2 > 200000001 && deper2 < 400000001 && wil == 2 && tipe_a == 1) {
+        rdeper2 = 2.08 / 100;
+    } else if (deper2 > 400000001 && deper2 < 800000001 && wil == 2 && tipe_a == 1) {
+        rdeper2 = 1.20 / 100;
+    } else if (deper2 > 800000001 && wil == 2 && tipe_a == 1) {
+        rdeper2 = 1.05 / 100;
+    } else if (deper2 < 125000001 && wil == 3 && tipe_a == 1) {
+        rdeper2 = 2.53 / 100;
+    } else if (deper2 > 125000001 && deper2 < 200000001 && wil == 3 && tipe_a == 1) {
+        rdeper2 = 2.69 / 100;
+    } else if (deper2 > 200000001 && deper2 < 400000001 && wil == 3 && tipe_a == 1) {
+        rdeper2 = 1.79 / 100;
+    } else if (deper2 > 400000001 && deper2 < 800000001 && wil == 3 && tipe_a == 1) {
+        rdeper2 = 1.14 / 100;
+    } else if (deper2 > 800000001 && wil == 3 && tipe_a == 1) {
+        rdeper2 = 1.05 / 100;
+    } else if (deper2 < 125000001 && wil == 1 && tipe_a == 2) {
+        rdeper2 = 0.47 / 100;
+    } else if (deper2 > 125000001 && deper2 < 200000001 && wil == 1 && tipe_a == 2) {
+        rdeper2 = 0.63 / 100;
+    } else if (deper2 > 200000001 && deper2 < 400000001 && wil == 1 && tipe_a == 2) {
+        rdeper2 = 0.41 / 100;
+    } else if (deper2 > 400000001 && deper2 < 800000001 && wil == 1 && tipe_a == 2) {
+        rdeper2 = 0.25 / 100;
+    } else if (deper2 > 800000001 && wil == 1 && tipe_a == 2) {
+        rdeper2 = 0.20 / 100;
+    } else if (deper2 < 125000001 && wil == 2 && tipe_a == 2) {
+        rdeper2 = 0.65 / 100;
+    } else if (deper2 > 125000001 && deper2 < 200000001 && wil == 2 && tipe_a == 2) {
+        rdeper2 = 0.44 / 100;
+    } else if (deper2 > 200000001 && deper2 < 400000001 && wil == 2 && tipe_a == 2) {
+        rdeper2 = 0.38 / 100;
+    } else if (deper2 > 400000001 && deper2 < 800000001 && wil == 2 && tipe_a == 2) {
+        rdeper2 = 0.25 / 100;
+    } else if (deper2 > 800000001 && wil == 2 && tipe_a == 2) {
+        rdeper2 = 0.20 / 100;
+    } else if (deper2 < 125000001 && wil == 3 && tipe_a == 2) {
+        rdeper2 = 0.51 / 100;
+    } else if (deper2 > 125000001 && deper2 < 200000001 && wil == 3 && tipe_a == 2) {
+        rdeper2 = 0.44 / 100;
+    } else if (deper2 > 200000001 && deper2 < 400000001 && wil == 3 && tipe_a == 2) {
+        rdeper2 = 0.29 / 100;
+    } else if (deper2 > 400000001 && deper2 < 800000001 && wil == 3 && tipe_a == 2) {
+        rdeper2 = 0.23 / 100;
+    } else if (deper2 > 800000001 && wil == 3 && tipe_a == 2) {
+        rdeper2 = 0.20 / 100;
+    } else if (deper2 < 125000001 && wil == 1 && tipe_a == 3) {
+        rdeper2 = 3.82 / 100;
+    } else if (deper2 > 125000001 && deper2 < 200000001 && wil == 1 && tipe_a == 3) {
+        rdeper2 = 2.67 / 100;
+    } else if (deper2 > 200000001 && deper2 < 400000001 && wil == 1 && tipe_a == 3) {
+        rdeper2 = 2.18 / 100;
+    } else if (deper2 > 400000001 && deper2 < 800000001 && wil == 1 && tipe_a == 3) {
+        rdeper2 = 1.20 / 100;
+    } else if (deper2 > 800000001 && wil == 1 && tipe_a == 3) {
+        rdeper2 = 1.05 / 100;
+    } else if (deper2 < 125000001 && wil == 2 && tipe_a == 3) {
+        rdeper2 = 3.26 / 100;
+    } else if (deper2 > 125000001 && deper2 < 200000001 && wil == 2 && tipe_a == 3) {
+        rdeper2 = 2.47 / 100;
+    } else if (deper2 > 200000001 && deper2 < 400000001 && wil == 2 && tipe_a == 3) {
+        rdeper2 = 2.08 / 100;
+    } else if (deper2 > 400000001 && deper2 < 800000001 && wil == 2 && tipe_a == 3) {
+        rdeper2 = 1.20 / 100;
+    } else if (deper2 > 800000001 && wil == 2 && tipe_a == 3) {
+        rdeper2 = 1.05 / 100;
+    } else if (deper2 < 125000001 && wil == 3 && tipe_a == 3) {
+        rdeper2 = 2.53 / 100;
+    } else if (deper2 > 125000001 && deper2 < 200000001 && wil == 3 && tipe_a == 3) {
+        rdeper2 = 2.69 / 100;
+    } else if (deper2 > 200000001 && deper2 < 400000001 && wil == 3 && tipe_a == 3) {
+        rdeper2 = 1.79 / 100;
+    } else if (deper2 > 400000001 && deper2 < 800000001 && wil == 3 && tipe_a == 3) {
+        rdeper2 = 1.14 / 100;
+    } else if (deper2 > 800000001 && wil == 3 && tipe_a == 3) {
+        rdeper2 = 1.05 / 100;
+    } else {
+        rdeper2 = 0;
+    }
+
+
+    if (deper3 < 125000001 && wil == 1 && tipe_a == 1) {
+        rdeper3 = 3.82 / 100;
+    } else if (deper3 > 125000001 && deper3 < 200000001 && wil == 1 && tipe_a == 1) {
+        rdeper3 = 2.67 / 100;
+    } else if (deper3 > 200000001 && deper3 < 400000001 && wil == 1 && tipe_a == 1) {
+        rdeper3 = 2.18 / 100;
+    } else if (deper3 > 400000001 && deper3 < 800000001 && wil == 1 && tipe_a == 1) {
+        rdeper3 = 1.20 / 100;
+    } else if (deper3 > 800000001 && wil == 1 && tipe_a == 1) {
+        rdeper3 = 1.05 / 100;
+    } else if (deper3 < 125000001 && wil == 2 && tipe_a == 1) {
+        rdeper3 = 3.26 / 100;
+    } else if (deper3 > 125000001 && deper3 < 200000001 && wil == 2 && tipe_a == 1) {
+        rdeper3 = 2.47 / 100;
+    } else if (deper3 > 200000001 && deper3 < 400000001 && wil == 2 && tipe_a == 1) {
+        rdeper3 = 2.08 / 100;
+    } else if (deper3 > 400000001 && deper3 < 800000001 && wil == 2 && tipe_a == 1) {
+        rdeper3 = 1.20 / 100;
+    } else if (deper3 > 800000001 && wil == 2 && tipe_a == 1) {
+        rdeper3 = 1.05 / 100;
+    } else if (deper3 < 125000001 && wil == 3 && tipe_a == 1) {
+        rdeper3 = 2.53 / 100;
+    } else if (deper3 > 125000001 && deper3 < 200000001 && wil == 3 && tipe_a == 1) {
+        rdeper3 = 2.69 / 100;
+    } else if (deper3 > 200000001 && deper3 < 400000001 && wil == 3 && tipe_a == 1) {
+        rdeper3 = 1.79 / 100;
+    } else if (deper3 > 400000001 && deper3 < 800000001 && wil == 3 && tipe_a == 1) {
+        rdeper3 = 1.14 / 100;
+    } else if (deper3 > 800000001 && wil == 3 && tipe_a == 1) {
+        rdeper3 = 1.05 / 100;
+    } else if (deper3 < 125000001 && wil == 1 && tipe_a == 2) {
+        rdeper3 = 0.47 / 100;
+    } else if (deper3 > 125000001 && deper3 < 200000001 && wil == 1 && tipe_a == 2) {
+        rdeper3 = 0.63 / 100;
+    } else if (deper3 > 200000001 && deper3 < 400000001 && wil == 1 && tipe_a == 2) {
+        rdeper3 = 0.41 / 100;
+    } else if (deper3 > 400000001 && deper3 < 800000001 && wil == 1 && tipe_a == 2) {
+        rdeper3 = 0.25 / 100;
+    } else if (deper3 > 800000001 && wil == 1 && tipe_a == 2) {
+        rdeper3 = 0.20 / 100;
+    } else if (deper3 < 125000001 && wil == 2 && tipe_a == 2) {
+        rdeper3 = 0.65 / 100;
+    } else if (deper3 > 125000001 && deper3 < 200000001 && wil == 2 && tipe_a == 2) {
+        rdeper3 = 0.44 / 100;
+    } else if (deper3 > 200000001 && deper3 < 400000001 && wil == 2 && tipe_a == 2) {
+        rdeper3 = 0.38 / 100;
+    } else if (deper3 > 400000001 && deper3 < 800000001 && wil == 2 && tipe_a == 2) {
+        rdeper3 = 0.25 / 100;
+    } else if (deper3 > 800000001 && wil == 2 && tipe_a == 2) {
+        rdeper3 = 0.20 / 100;
+    } else if (deper3 < 125000001 && wil == 3 && tipe_a == 2) {
+        rdeper3 = 0.51 / 100;
+    } else if (deper3 > 125000001 && deper3 < 200000001 && wil == 3 && tipe_a == 2) {
+        rdeper3 = 0.44 / 100;
+    } else if (deper3 > 200000001 && deper3 < 400000001 && wil == 3 && tipe_a == 2) {
+        rdeper3 = 0.29 / 100;
+    } else if (deper3 > 400000001 && deper3 < 800000001 && wil == 3 && tipe_a == 2) {
+        rdeper3 = 0.23 / 100;
+    } else if (deper3 > 800000001 && wil == 3 && tipe_a == 2) {
+        rdeper3 = 0.20 / 100;
+    } else if (deper3 < 125000001 && wil == 1 && tipe_a == 3) {
+        rdeper3 = 0.47 / 100;
+    } else if (deper3 > 125000001 && deper3 < 200000001 && wil == 1 && tipe_a == 3) {
+        rdeper3 = 0.63 / 100;
+    } else if (deper3 > 200000001 && deper3 < 400000001 && wil == 1 && tipe_a == 3) {
+        rdeper3 = 0.41 / 100;
+    } else if (deper3 > 400000001 && deper3 < 800000001 && wil == 1 && tipe_a == 3) {
+        rdeper3 = 0.25 / 100;
+    } else if (deper3 > 800000001 && wil == 1 && tipe_a == 3) {
+        rdeper3 = 0.20 / 100;
+    } else if (deper3 < 125000001 && wil == 2 && tipe_a == 3) {
+        rdeper3 = 0.65 / 100;
+    } else if (deper3 > 125000001 && deper3 < 200000001 && wil == 2 && tipe_a == 3) {
+        rdeper3 = 0.44 / 100;
+    } else if (deper3 > 200000001 && deper3 < 400000001 && wil == 2 && tipe_a == 3) {
+        rdeper3 = 0.38 / 100;
+    } else if (deper3 > 400000001 && deper3 < 800000001 && wil == 2 && tipe_a == 3) {
+        rdeper3 = 0.25 / 100;
+    } else if (deper3 > 800000001 && wil == 2 && tipe_a == 3) {
+        rdeper3 = 0.20 / 100;
+    } else if (deper3 < 125000001 && wil == 3 && tipe_a == 3) {
+        rdeper3 = 0.51 / 100;
+    } else if (deper3 > 125000001 && deper3 < 200000001 && wil == 3 && tipe_a == 3) {
+        rdeper3 = 0.44 / 100;
+    } else if (deper3 > 200000001 && deper3 < 400000001 && wil == 3 && tipe_a == 3) {
+        rdeper3 = 0.29 / 100;
+    } else if (deper3 > 400000001 && deper3 < 800000001 && wil == 3 && tipe_a == 3) {
+        rdeper3 = 0.23 / 100;
+    } else if (deper3 > 800000001 && wil == 3 && tipe_a == 3) {
+        rdeper3 = 0.20 / 100;
+    } else {
+        rdeper3 = 0;
+    }
+
+    if (deper4 < 125000001 && wil == 1 && tipe_a == 1) {
+        rdeper4 = 3.82 / 100;
+    } else if (deper4 > 125000001 && deper4 < 200000001 && wil == 1 && tipe_a == 1) {
+        rdeper4 = 2.67 / 100;
+    } else if (deper4 > 200000001 && deper4 < 400000001 && wil == 1 && tipe_a == 1) {
+        rdeper4 = 2.18 / 100;
+    } else if (deper4 > 400000001 && deper4 < 800000001 && wil == 1 && tipe_a == 1) {
+        rdeper4 = 1.20 / 100;
+    } else if (deper4 > 800000001 && wil == 1 && tipe_a == 1) {
+        rdeper4 = 1.05 / 100;
+    } else if (deper4 < 125000001 && wil == 2 && tipe_a == 1) {
+        rdeper4 = 3.26 / 100;
+    } else if (deper4 > 125000001 && deper4 < 200000001 && wil == 2 && tipe_a == 1) {
+        rdeper4 = 2.47 / 100;
+    } else if (deper4 > 200000001 && deper4 < 400000001 && wil == 2 && tipe_a == 1) {
+        rdeper4 = 2.08 / 100;
+    } else if (deper4 > 400000001 && deper4 < 800000001 && wil == 2 && tipe_a == 1) {
+        rdeper4 = 1.20 / 100;
+    } else if (deper4 > 800000001 && wil == 2 && tipe_a == 1) {
+        rdeper4 = 1.05 / 100;
+    } else if (deper4 < 125000001 && wil == 3 && tipe_a == 1) {
+        rdeper4 = 2.53 / 100;
+    } else if (deper4 > 125000001 && deper4 < 200000001 && wil == 3 && tipe_a == 1) {
+        rdeper4 = 2.69 / 100;
+    } else if (deper4 > 200000001 && deper4 < 400000001 && wil == 3 && tipe_a == 1) {
+        rdeper4 = 1.79 / 100;
+    } else if (deper4 > 400000001 && deper4 < 800000001 && wil == 3 && tipe_a == 1) {
+        rdeper4 = 1.14 / 100;
+    } else if (deper4 > 800000001 && wil == 3 && tipe_a == 1) {
+        rdeper4 = 1.05 / 100;
+    } else if (deper4 < 125000001 && wil == 1 && tipe_a == 2) {
+        rdeper4 = 0.47 / 100;
+    } else if (deper4 > 125000001 && deper4 < 200000001 && wil == 1 && tipe_a == 2) {
+        rdeper4 = 0.63 / 100;
+    } else if (deper4 > 200000001 && deper4 < 400000001 && wil == 1 && tipe_a == 2) {
+        rdeper4 = 0.41 / 100;
+    } else if (deper4 > 400000001 && deper4 < 800000001 && wil == 1 && tipe_a == 2) {
+        rdeper4 = 0.25 / 100;
+    } else if (deper4 > 800000001 && wil == 1 && tipe_a == 2) {
+        rdeper4 = 0.20 / 100;
+    } else if (deper4 < 125000001 && wil == 2 && tipe_a == 2) {
+        rdeper4 = 0.65 / 100;
+    } else if (deper4 > 125000001 && deper4 < 200000001 && wil == 2 && tipe_a == 2) {
+        rdeper4 = 0.44 / 100;
+    } else if (deper4 > 200000001 && deper4 < 400000001 && wil == 2 && tipe_a == 2) {
+        rdeper4 = 0.38 / 100;
+    } else if (deper4 > 400000001 && deper4 < 800000001 && wil == 2 && tipe_a == 2) {
+        rdeper4 = 0.25 / 100;
+    } else if (deper4 > 800000001 && wil == 2 && tipe_a == 2) {
+        rdeper4 = 0.20 / 100;
+    } else if (deper4 < 125000001 && wil == 3 && tipe_a == 2) {
+        rdeper4 = 0.51 / 100;
+    } else if (deper4 > 125000001 && deper4 < 200000001 && wil == 3 && tipe_a == 2) {
+        rdeper4 = 0.44 / 100;
+    } else if (deper4 > 200000001 && deper4 < 400000001 && wil == 3 && tipe_a == 2) {
+        rdeper4 = 0.29 / 100;
+    } else if (deper4 > 400000001 && deper4 < 800000001 && wil == 3 && tipe_a == 2) {
+        rdeper4 = 0.23 / 100;
+    } else if (deper4 > 800000001 && wil == 3 && tipe_a == 2) {
+        rdeper4 = 0.20 / 100;
+    } else if (deper4 < 125000001 && wil == 3 && tipe_a == 3) {
+        rdeper4 = 0.51 / 100;
+    } else if (deper4 > 125000001 && deper4 < 200000001 && wil == 1 && tipe_a == 3) {
+        rdeper4 = 0.63 / 100;
+    } else if (deper4 > 200000001 && deper4 < 400000001 && wil == 1 && tipe_a == 3) {
+        rdeper4 = 0.41 / 100;
+    } else if (deper4 > 400000001 && deper4 < 800000001 && wil == 1 && tipe_a == 3) {
+        rdeper4 = 0.25 / 100;
+    } else if (deper4 > 800000001 && wil == 1 && tipe_a == 3) {
+        rdeper4 = 0.20 / 100;
+    } else if (deper4 < 125000001 && wil == 2 && tipe_a == 3) {
+        rdeper4 = 0.65 / 100;
+    } else if (deper4 > 125000001 && deper4 < 200000001 && wil == 2 && tipe_a == 3) {
+        rdeper4 = 0.44 / 100;
+    } else if (deper4 > 200000001 && deper4 < 400000001 && wil == 2 && tipe_a == 3) {
+        rdeper4 = 0.38 / 100;
+    } else if (deper4 > 400000001 && deper4 < 800000001 && wil == 2 && tipe_a == 3) {
+        rdeper4 = 0.25 / 100;
+    } else if (deper4 > 800000001 && wil == 2 && tipe_a == 3) {
+        rdeper4 = 0.20 / 100;
+    } else if (deper4 < 125000001 && wil == 3 && tipe_a == 3) {
+        rdeper4 = 0.51 / 100;
+    } else if (deper4 > 125000001 && deper4 < 200000001 && wil == 3 && tipe_a == 3) {
+        rdeper4 = 0.44 / 100;
+    } else if (deper4 > 200000001 && deper4 < 400000001 && wil == 3 && tipe_a == 3) {
+        rdeper4 = 0.29 / 100;
+    } else if (deper4 > 400000001 && deper4 < 800000001 && wil == 3 && tipe_a == 3) {
+        rdeper4 = 0.23 / 100;
+    } else if (deper4 > 800000001 && wil == 3 && tipe_a == 3) {
+        rdeper4 = 0.20 / 100;
+    } else {
+        rdeper4 = 0;
+    }
+
+    if (deper5 < 125000001 && wil == 1 && tipe_a == 1) {
+        rdeper5 = 3.82 / 100;
+    } else if (deper5 > 125000001 && deper5 < 200000001 && wil == 1 && tipe_a == 1) {
+        rdeper5 = 2.67 / 100;
+    } else if (deper5 > 200000001 && deper5 < 400000001 && wil == 1 && tipe_a == 1) {
+        rdeper5 = 2.18 / 100;
+    } else if (deper5 > 400000001 && deper5 < 800000001 && wil == 1 && tipe_a == 1) {
+        rdeper5 = 1.20 / 100;
+    } else if (deper5 > 800000001 && wil == 1 && tipe_a == 1) {
+        rdeper5 = 1.05 / 100;
+    } else if (deper5 < 125000001 && wil == 2 && tipe_a == 1) {
+        rdeper5 = 3.26 / 100;
+    } else if (deper5 > 125000001 && deper5 < 200000001 && wil == 2 && tipe_a == 1) {
+        rdeper5 = 2.47 / 100;
+    } else if (deper5 > 200000001 && deper5 < 400000001 && wil == 2 && tipe_a == 1) {
+        rdeper5 = 2.08 / 100;
+    } else if (deper5 > 400000001 && deper5 < 800000001 && wil == 2 && tipe_a == 1) {
+        rdeper5 = 1.20 / 100;
+    } else if (deper5 > 800000001 && wil == 2 && tipe_a == 1) {
+        rdeper5 = 1.05 / 100;
+    } else if (deper5 < 125000001 && wil == 3 && tipe_a == 1) {
+        rdeper5 = 2.53 / 100;
+    } else if (deper5 > 125000001 && deper5 < 200000001 && wil == 3 && tipe_a == 1) {
+        rdeper5 = 2.69 / 100;
+    } else if (deper5 > 200000001 && deper5 < 400000001 && wil == 3 && tipe_a == 1) {
+        rdeper5 = 1.79 / 100;
+    } else if (deper5 > 400000001 && deper5 < 800000001 && wil == 3 && tipe_a == 1) {
+        rdeper5 = 1.14 / 100;
+    } else if (deper5 > 800000001 && wil == 3 && tipe_a == 1) {
+        rdeper5 = 1.05 / 100;
+    } else if (deper5 < 125000001 && wil == 1 && tipe_a == 2) {
+        rdeper5 = 0.47 / 100;
+    } else if (deper5 > 125000001 && deper5 < 200000001 && wil == 1 && tipe_a == 2) {
+        rdeper5 = 0.63 / 100;
+    } else if (deper5 > 200000001 && deper5 < 400000001 && wil == 1 && tipe_a == 2) {
+        rdeper5 = 0.41 / 100;
+    } else if (deper5 > 400000001 && deper5 < 800000001 && wil == 1 && tipe_a == 2) {
+        rdeper5 = 0.25 / 100;
+    } else if (deper5 > 800000001 && wil == 1 && tipe_a == 2) {
+        rdeper5 = 0.20 / 100;
+    } else if (deper5 < 125000001 && wil == 2 && tipe_a == 2) {
+        rdeper5 = 0.65 / 100;
+    } else if (deper5 > 125000001 && deper5 < 200000001 && wil == 2 && tipe_a == 2) {
+        rdeper5 = 0.44 / 100;
+    } else if (deper5 > 200000001 && deper5 < 400000001 && wil == 2 && tipe_a == 2) {
+        rdeper5 = 0.38 / 100;
+    } else if (deper5 > 400000001 && deper5 < 800000001 && wil == 2 && tipe_a == 2) {
+        rdeper5 = 0.25 / 100;
+    } else if (deper5 > 800000001 && wil == 2 && tipe_a == 2) {
+        rdeper5 = 0.20 / 100;
+    } else if (deper5 < 125000001 && wil == 3 && tipe_a == 2) {
+        rdeper5 = 0.51 / 100;
+    } else if (deper5 > 125000001 && deper5 < 200000001 && wil == 3 && tipe_a == 2) {
+        rdeper5 = 0.44 / 100;
+    } else if (deper5 > 200000001 && deper5 < 400000001 && wil == 3 && tipe_a == 2) {
+        rdeper5 = 0.29 / 100;
+    } else if (deper5 > 400000001 && deper5 < 800000001 && wil == 3 && tipe_a == 2) {
+        rdeper5 = 0.23 / 100;
+    } else if (deper5 > 800000001 && wil == 3 && tipe_a == 2) {
+        rdeper5 = 0.20 / 100;
+    } else if (deper5 < 125000001 && wil == 1 && tipe_a == 3) {
+        rdeper5 = 0.47 / 100;
+    } else if (deper5 > 125000001 && deper5 < 200000001 && wil == 1 && tipe_a == 3) {
+        rdeper5 = 0.63 / 100;
+    } else if (deper5 > 200000001 && deper5 < 400000001 && wil == 1 && tipe_a == 3) {
+        rdeper5 = 0.41 / 100;
+    } else if (deper5 > 400000001 && deper5 < 800000001 && wil == 1 && tipe_a == 3) {
+        rdeper5 = 0.25 / 100;
+    } else if (deper5 > 800000001 && wil == 1 && tipe_a == 3) {
+        rdeper5 = 0.20 / 100;
+    } else if (deper5 < 125000001 && wil == 2 && tipe_a == 3) {
+        rdeper5 = 0.65 / 100;
+    } else if (deper5 > 125000001 && deper5 < 200000001 && wil == 2 && tipe_a == 3) {
+        rdeper5 = 0.44 / 100;
+    } else if (deper5 > 200000001 && deper5 < 400000001 && wil == 2 && tipe_a == 3) {
+        rdeper5 = 0.38 / 100;
+    } else if (deper5 > 400000001 && deper5 < 800000001 && wil == 2 && tipe_a == 3) {
+        rdeper5 = 0.25 / 100;
+    } else if (deper5 > 800000001 && wil == 2 && tipe_a == 3) {
+        rdeper5 = 0.20 / 100;
+    } else if (deper5 < 125000001 && wil == 3 && tipe_a == 3) {
+        rdeper5 = 0.51 / 100;
+    } else if (deper5 > 125000001 && deper5 < 200000001 && wil == 3 && tipe_a == 3) {
+        rdeper5 = 0.44 / 100;
+    } else if (deper5 > 200000001 && deper5 < 400000001 && wil == 3 && tipe_a == 3) {
+        rdeper5 = 0.29 / 100;
+    } else if (deper5 > 400000001 && deper5 < 800000001 && wil == 3 && tipe_a == 3) {
+        rdeper5 = 0.23 / 100;
+    } else if (deper5 > 800000001 && wil == 3 && tipe_a == 3) {
+        rdeper5 = 0.20 / 100;
+    } else {
+        rdeper5 = 0;
+    }
+
+    if (deper6 < 125000001 && wil == 1 && tipe_a == 1) {
+        rdeper6 = 3.82 / 100;
+    } else if (deper6 > 125000001 && deper6 < 200000001 && wil == 1 && tipe_a == 1) {
+        rdeper6 = 2.67 / 100;
+    } else if (deper6 > 200000001 && deper6 < 400000001 && wil == 1 && tipe_a == 1) {
+        rdeper6 = 2.18 / 100;
+    } else if (deper6 > 400000001 && deper6 < 800000001 && wil == 1 && tipe_a == 1) {
+        rdeper6 = 1.20 / 100;
+    } else if (deper6 > 800000001 && wil == 1 && tipe_a == 1) {
+        rdeper6 = 1.05 / 100;
+    } else if (deper6 < 125000001 && wil == 2 && tipe_a == 1) {
+        rdeper6 = 3.26 / 100;
+    } else if (deper6 > 125000001 && deper6 < 200000001 && wil == 2 && tipe_a == 1) {
+        rdeper6 = 2.47 / 100;
+    } else if (deper6 > 200000001 && deper6 < 400000001 && wil == 2 && tipe_a == 1) {
+        rdeper6 = 2.08 / 100;
+    } else if (deper6 > 400000001 && deper6 < 800000001 && wil == 2 && tipe_a == 1) {
+        rdeper6 = 1.20 / 100;
+    } else if (deper6 > 800000001 && wil == 2 && tipe_a == 1) {
+        rdeper6 = 1.05 / 100;
+    } else if (deper6 < 125000001 && wil == 3 && tipe_a == 1) {
+        rdeper6 = 2.53 / 100;
+    } else if (deper6 > 125000001 && deper6 < 200000001 && wil == 3 && tipe_a == 1) {
+        rdeper6 = 2.69 / 100;
+    } else if (deper6 > 200000001 && deper6 < 400000001 && wil == 3 && tipe_a == 1) {
+        rdeper6 = 1.79 / 100;
+    } else if (deper6 > 400000001 && deper6 < 800000001 && wil == 3 && tipe_a == 1) {
+        rdeper6 = 1.14 / 100;
+    } else if (deper6 > 800000001 && wil == 3 && tipe_a == 1) {
+        rdeper6 = 1.05 / 100;
+    } else if (deper6 < 125000001 && wil == 1 && tipe_a == 2) {
+        rdeper6 = 0.47 / 100;
+    } else if (deper6 > 125000001 && deper6 < 200000001 && wil == 1 && tipe_a == 2) {
+        rdeper6 = 0.63 / 100;
+    } else if (deper6 > 200000001 && deper6 < 400000001 && wil == 1 && tipe_a == 2) {
+        rdeper6 = 0.41 / 100;
+    } else if (deper6 > 400000001 && deper6 < 800000001 && wil == 1 && tipe_a == 2) {
+        rdeper6 = 0.25 / 100;
+    } else if (deper6 > 800000001 && wil == 1 && tipe_a == 2) {
+        rdeper6 = 0.20 / 100;
+    } else if (deper6 < 125000001 && wil == 2 && tipe_a == 2) {
+        rdeper6 = 0.65 / 100;
+    } else if (deper6 > 125000001 && deper6 < 200000001 && wil == 2 && tipe_a == 2) {
+        rdeper6 = 0.44 / 100;
+    } else if (deper6 > 200000001 && deper6 < 400000001 && wil == 2 && tipe_a == 2) {
+        rdeper6 = 0.38 / 100;
+    } else if (deper6 > 400000001 && deper6 < 800000001 && wil == 2 && tipe_a == 2) {
+        rdeper6 = 0.25 / 100;
+    } else if (deper6 > 800000001 && wil == 2 && tipe_a == 2) {
+        rdeper6 = 0.20 / 100;
+    } else if (deper6 < 125000001 && wil == 3 && tipe_a == 2) {
+        rdeper6 = 0.51 / 100;
+    } else if (deper6 > 125000001 && deper6 < 200000001 && wil == 3 && tipe_a == 2) {
+        rdeper6 = 0.44 / 100;
+    } else if (deper6 > 200000001 && deper6 < 400000001 && wil == 3 && tipe_a == 2) {
+        rdeper6 = 0.29 / 100;
+    } else if (deper6 > 400000001 && deper6 < 800000001 && wil == 3 && tipe_a == 2) {
+        rdeper6 = 0.23 / 100;
+    } else if (deper6 > 800000001 && wil == 3 && tipe_a == 2) {
+        rdeper6 = 0.20 / 100;
+    } else if (deper6 < 125000001 && wil == 1 && tipe_a == 3) {
+        rdeper6 = 0.47 / 100;
+    } else if (deper6 > 125000001 && deper6 < 200000001 && wil == 1 && tipe_a == 3) {
+        rdeper6 = 0.63 / 100;
+    } else if (deper6 > 200000001 && deper6 < 400000001 && wil == 1 && tipe_a == 3) {
+        rdeper6 = 0.41 / 100;
+    } else if (deper6 > 400000001 && deper6 < 800000001 && wil == 1 && tipe_a == 3) {
+        rdeper6 = 0.25 / 100;
+    } else if (deper6 > 800000001 && wil == 1 && tipe_a == 3) {
+        rdeper6 = 0.20 / 100;
+    } else if (deper6 < 125000001 && wil == 2 && tipe_a == 3) {
+        rdeper6 = 0.65 / 100;
+    } else if (deper6 > 125000001 && deper6 < 200000001 && wil == 2 && tipe_a == 3) {
+        rdeper6 = 0.44 / 100;
+    } else if (deper6 > 200000001 && deper6 < 400000001 && wil == 2 && tipe_a == 3) {
+        rdeper6 = 0.38 / 100;
+    } else if (deper6 > 400000001 && deper6 < 800000001 && wil == 2 && tipe_a == 3) {
+        rdeper6 = 0.25 / 100;
+    } else if (deper6 > 800000001 && wil == 2 && tipe_a == 3) {
+        rdeper6 = 0.20 / 100;
+    } else if (deper6 < 125000001 && wil == 3 && tipe_a == 3) {
+        rdeper6 = 0.51 / 100;
+    } else if (deper6 > 125000001 && deper6 < 200000001 && wil == 3 && tipe_a == 3) {
+        rdeper6 = 0.44 / 100;
+    } else if (deper6 > 200000001 && deper6 < 400000001 && wil == 3 && tipe_a == 3) {
+        rdeper6 = 0.29 / 100;
+    } else if (deper6 > 400000001 && deper6 < 800000001 && wil == 3 && tipe_a == 3) {
+        rdeper6 = 0.23 / 100;
+    } else if (deper6 > 800000001 && wil == 3 && tipe_a == 3) {
+        rdeper6 = 0.20 / 100;
+    } else {
+        rdeper6 = 0;
+    }
+
+    if (deper7 < 125000001 && wil == 1 && tipe_a == 1) {
+        rdeper7 = 3.82 / 100;
+    } else if (deper7 > 125000001 && deper7 < 200000001 && wil == 1 && tipe_a == 1) {
+        rdeper7 = 2.67 / 100;
+    } else if (deper7 > 200000001 && deper7 < 400000001 && wil == 1 && tipe_a == 1) {
+        rdeper7 = 2.18 / 100;
+    } else if (deper7 > 400000001 && deper7 < 800000001 && wil == 1 && tipe_a == 1) {
+        rdeper7 = 1.20 / 100;
+    } else if (deper7 > 800000001 && wil == 1 && tipe_a == 1) {
+        rdeper7 = 1.05 / 100;
+    } else if (deper7 < 125000001 && wil == 2 && tipe_a == 1) {
+        rdeper7 = 3.26 / 100;
+    } else if (deper7 > 125000001 && deper7 < 200000001 && wil == 2 && tipe_a == 1) {
+        rdeper7 = 2.47 / 100;
+    } else if (deper7 > 200000001 && deper7 < 400000001 && wil == 2 && tipe_a == 1) {
+        rdeper7 = 2.08 / 100;
+    } else if (deper7 > 400000001 && deper7 < 800000001 && wil == 2 && tipe_a == 1) {
+        rdeper7 = 1.20 / 100;
+    } else if (deper7 > 800000001 && wil == 2 && tipe_a == 1) {
+        rdeper7 = 1.05 / 100;
+    } else if (deper7 < 125000001 && wil == 3 && tipe_a == 1) {
+        rdeper7 = 2.53 / 100;
+    } else if (deper7 > 125000001 && deper7 < 200000001 && wil == 3 && tipe_a == 1) {
+        rdeper7 = 2.69 / 100;
+    } else if (deper7 > 200000001 && deper7 < 400000001 && wil == 3 && tipe_a == 1) {
+        rdeper7 = 1.79 / 100;
+    } else if (deper7 > 400000001 && deper7 < 800000001 && wil == 3 && tipe_a == 1) {
+        rdeper7 = 1.14 / 100;
+    } else if (deper7 > 800000001 && wil == 3 && tipe_a == 1) {
+        rdeper7 = 1.05 / 100;
+    } else if (deper7 < 125000001 && wil == 1 && tipe_a == 2) {
+        rdeper7 = 0.47 / 100;
+    } else if (deper7 > 125000001 && deper7 < 200000001 && wil == 1 && tipe_a == 2) {
+        rdeper7 = 0.63 / 100;
+    } else if (deper7 > 200000001 && deper7 < 400000001 && wil == 1 && tipe_a == 2) {
+        rdeper7 = 0.41 / 100;
+    } else if (deper7 > 400000001 && deper7 < 800000001 && wil == 1 && tipe_a == 2) {
+        rdeper7 = 0.25 / 100;
+    } else if (deper7 > 800000001 && wil == 1 && tipe_a == 2) {
+        rdeper7 = 0.20 / 100;
+    } else if (deper7 < 125000001 && wil == 2 && tipe_a == 2) {
+        rdeper7 = 0.65 / 100;
+    } else if (deper7 > 125000001 && deper7 < 200000001 && wil == 2 && tipe_a == 2) {
+        rdeper7 = 0.44 / 100;
+    } else if (deper7 > 200000001 && deper7 < 400000001 && wil == 2 && tipe_a == 2) {
+        rdeper7 = 0.38 / 100;
+    } else if (deper7 > 400000001 && deper7 < 800000001 && wil == 2 && tipe_a == 2) {
+        rdeper7 = 0.25 / 100;
+    } else if (deper7 > 800000001 && wil == 2 && tipe_a == 2) {
+        rdeper7 = 0.20 / 100;
+    } else if (deper7 < 125000001 && wil == 3 && tipe_a == 2) {
+        rdeper7 = 0.51 / 100;
+    } else if (deper7 > 125000001 && deper7 < 200000001 && wil == 3 && tipe_a == 2) {
+        rdeper7 = 0.44 / 100;
+    } else if (deper7 > 200000001 && deper7 < 400000001 && wil == 3 && tipe_a == 2) {
+        rdeper7 = 0.29 / 100;
+    } else if (deper7 > 400000001 && deper7 < 800000001 && wil == 3 && tipe_a == 2) {
+        rdeper7 = 0.23 / 100;
+    } else if (deper7 > 800000001 && wil == 3 && tipe_a == 2) {
+        rdeper7 = 0.20 / 100;
+    } else if (deper7 < 125000001 && wil == 1 && tipe_a == 3) {
+        rdeper7 = 0.47 / 100;
+    } else if (deper7 > 125000001 && deper7 < 200000001 && wil == 1 && tipe_a == 3) {
+        rdeper7 = 0.63 / 100;
+    } else if (deper7 > 200000001 && deper7 < 400000001 && wil == 1 && tipe_a == 3) {
+        rdeper7 = 0.41 / 100;
+    } else if (deper7 > 400000001 && deper7 < 800000001 && wil == 1 && tipe_a == 3) {
+        rdeper7 = 0.25 / 100;
+    } else if (deper7 > 800000001 && wil == 1 && tipe_a == 3) {
+        rdeper7 = 0.20 / 100;
+    } else if (deper7 < 125000001 && wil == 2 && tipe_a == 3) {
+        rdeper7 = 0.65 / 100;
+    } else if (deper7 > 125000001 && deper7 < 200000001 && wil == 2 && tipe_a == 3) {
+        rdeper7 = 0.44 / 100;
+    } else if (deper7 > 200000001 && deper7 < 400000001 && wil == 2 && tipe_a == 3) {
+        rdeper7 = 0.38 / 100;
+    } else if (deper7 > 400000001 && deper7 < 800000001 && wil == 2 && tipe_a == 3) {
+        rdeper7 = 0.25 / 100;
+    } else if (deper7 > 800000001 && wil == 2 && tipe_a == 3) {
+        rdeper7 = 0.20 / 100;
+    } else if (deper7 < 125000001 && wil == 3 && tipe_a == 3) {
+        rdeper7 = 0.51 / 100;
+    } else if (deper7 > 125000001 && deper7 < 200000001 && wil == 3 && tipe_a == 3) {
+        rdeper7 = 0.44 / 100;
+    } else if (deper7 > 200000001 && deper7 < 400000001 && wil == 3 && tipe_a == 3) {
+        rdeper7 = 0.29 / 100;
+    } else if (deper7 > 400000001 && deper7 < 800000001 && wil == 3 && tipe_a == 3) {
+        rdeper7 = 0.23 / 100;
+    } else if (deper7 > 800000001 && wil == 3 && tipe_a == 3) {
+        rdeper7 = 0.20 / 100;
+    } else {
+        rdeper7 = 0;
+    }
+
+    if (deper8 < 125000001 && wil == 1 && tipe_a == 1) {
+        rdeper8 = 3.82 / 100;
+    } else if (deper8 > 125000001 && deper8 < 200000001 && wil == 1 && tipe_a == 1) {
+        rdeper8 = 2.67 / 100;
+    } else if (deper8 > 200000001 && deper8 < 400000001 && wil == 1 && tipe_a == 1) {
+        rdeper8 = 2.18 / 100;
+    } else if (deper8 > 400000001 && deper8 < 800000001 && wil == 1 && tipe_a == 1) {
+        rdeper8 = 1.20 / 100;
+    } else if (deper8 > 800000001 && wil == 1 && tipe_a == 1) {
+        rdeper8 = 1.05 / 100;
+    } else if (deper8 < 125000001 && wil == 2 && tipe_a == 1) {
+        rdeper8 = 3.26 / 100;
+    } else if (deper8 > 125000001 && deper8 < 200000001 && wil == 2 && tipe_a == 1) {
+        rdeper8 = 2.47 / 100;
+    } else if (deper8 > 200000001 && deper8 < 400000001 && wil == 2 && tipe_a == 1) {
+        rdeper8 = 2.08 / 100;
+    } else if (deper8 > 400000001 && deper8 < 800000001 && wil == 2 && tipe_a == 1) {
+        rdeper8 = 1.20 / 100;
+    } else if (deper8 > 800000001 && wil == 2 && tipe_a == 1) {
+        rdeper8 = 1.05 / 100;
+    } else if (deper8 < 125000001 && wil == 3 && tipe_a == 1) {
+        rdeper8 = 2.53 / 100;
+    } else if (deper8 > 125000001 && deper8 < 200000001 && wil == 3 && tipe_a == 1) {
+        rdeper8 = 2.69 / 100;
+    } else if (deper8 > 200000001 && deper8 < 400000001 && wil == 3 && tipe_a == 1) {
+        rdeper8 = 1.79 / 100;
+    } else if (deper8 > 400000001 && deper8 < 800000001 && wil == 3 && tipe_a == 1) {
+        rdeper8 = 1.14 / 100;
+    } else if (deper8 > 800000001 && wil == 3 && tipe_a == 1) {
+        rdeper8 = 1.05 / 100;
+    } else if (deper8 < 125000001 && wil == 1 && tipe_a == 2) {
+        rdeper8 = 0.47 / 100;
+    } else if (deper8 > 125000001 && deper8 < 200000001 && wil == 1 && tipe_a == 2) {
+        rdeper8 = 0.63 / 100;
+    } else if (deper8 > 200000001 && deper8 < 400000001 && wil == 1 && tipe_a == 2) {
+        rdeper8 = 0.41 / 100;
+    } else if (deper8 > 400000001 && deper8 < 800000001 && wil == 1 && tipe_a == 2) {
+        rdeper8 = 0.25 / 100;
+    } else if (deper8 > 800000001 && wil == 1 && tipe_a == 2) {
+        rdeper8 = 0.20 / 100;
+    } else if (deper8 < 125000001 && wil == 2 && tipe_a == 2) {
+        rdeper8 = 0.65 / 100;
+    } else if (deper8 > 125000001 && deper8 < 200000001 && wil == 2 && tipe_a == 2) {
+        rdeper8 = 0.44 / 100;
+    } else if (deper8 > 200000001 && deper8 < 400000001 && wil == 2 && tipe_a == 2) {
+        rdeper8 = 0.38 / 100;
+    } else if (deper8 > 400000001 && deper8 < 800000001 && wil == 2 && tipe_a == 2) {
+        rdeper8 = 0.25 / 100;
+    } else if (deper8 > 800000001 && wil == 2 && tipe_a == 2) {
+        rdeper8 = 0.20 / 100;
+    } else if (deper8 < 125000001 && wil == 3 && tipe_a == 2) {
+        rdeper8 = 0.51 / 100;
+    } else if (deper8 > 125000001 && deper8 < 200000001 && wil == 3 && tipe_a == 2) {
+        rdeper8 = 0.44 / 100;
+    } else if (deper8 > 200000001 && deper8 < 400000001 && wil == 3 && tipe_a == 2) {
+        rdeper8 = 0.29 / 100;
+    } else if (deper8 > 400000001 && deper8 < 800000001 && wil == 3 && tipe_a == 2) {
+        rdeper8 = 0.23 / 100;
+    } else if (deper8 > 800000001 && wil == 3 && tipe_a == 2) {
+        rdeper8 = 0.20 / 100;
+    } else if (deper8 < 125000001 && wil == 1 && tipe_a == 3) {
+        rdeper8 = 0.47 / 100;
+    } else if (deper8 > 125000001 && deper8 < 200000001 && wil == 1 && tipe_a == 3) {
+        rdeper8 = 0.63 / 100;
+    } else if (deper8 > 200000001 && deper8 < 400000001 && wil == 1 && tipe_a == 3) {
+        rdeper8 = 0.41 / 100;
+    } else if (deper8 > 400000001 && deper8 < 800000001 && wil == 1 && tipe_a == 3) {
+        rdeper8 = 0.25 / 100;
+    } else if (deper8 > 800000001 && wil == 1 && tipe_a == 3) {
+        rdeper8 = 0.20 / 100;
+    } else if (deper8 < 125000001 && wil == 2 && tipe_a == 3) {
+        rdeper8 = 0.65 / 100;
+    } else if (deper8 > 125000001 && deper8 < 200000001 && wil == 2 && tipe_a == 3) {
+        rdeper8 = 0.44 / 100;
+    } else if (deper8 > 200000001 && deper8 < 400000001 && wil == 2 && tipe_a == 3) {
+        rdeper8 = 0.38 / 100;
+    } else if (deper8 > 400000001 && deper8 < 800000001 && wil == 2 && tipe_a == 3) {
+        rdeper8 = 0.25 / 100;
+    } else if (deper8 > 800000001 && wil == 2 && tipe_a == 3) {
+        rdeper8 = 0.20 / 100;
+    } else if (deper8 < 125000001 && wil == 3 && tipe_a == 3) {
+        rdeper8 = 0.51 / 100;
+    } else if (deper8 > 125000001 && deper8 < 200000001 && wil == 3 && tipe_a == 3) {
+        rdeper8 = 0.44 / 100;
+    } else if (deper8 > 200000001 && deper8 < 400000001 && wil == 3 && tipe_a == 3) {
+        rdeper8 = 0.29 / 100;
+    } else if (deper8 > 400000001 && deper8 < 800000001 && wil == 3 && tipe_a == 3) {
+        rdeper8 = 0.23 / 100;
+    } else if (deper8 > 800000001 && wil == 3 && tipe_a == 3) {
+        rdeper8 = 0.20 / 100;
+    } else {
+        rdeper8 = 0;
+    }
+
+   
+    var rth1 = deper1 * rdeper1; 
+    var rth2 = deper2 * rdeper2;
+    var rth3 = deper3 * rdeper3;
+    var rth4 = deper4 * rdeper4;
+    var rth5 = deper5 * rdeper5;
+    var rth6 = deper6 * rdeper6;
+    var rth7 = deper7 * rdeper7;
+    var rth8 = deper8 * rdeper8;
+
+
+    var hitask1 = rth1;
+    var hitask2 = rth1 + rth2;
+    var hitask3 = rth1 + rth2 + rth3; 
+    var hitask4 = rth1 + rth2 + rth3 + rth4;
+    var hitask5 = rth1 + rth2 + rth3 + rth4 + rth5;
+    var hitask6 = rth1 + rth2 + rth3 + rth4 + rth5 + rth6;
+    var hitask7 = rth1 + rth2 + rth3 + rth4 + rth5 + rth6 + rth7;
+    var hitask8 = rth1 + rth2 + rth3 + rth4 + rth5 + rth6 + rth7 + rth8;
+
+    if (jk == 12) {
+        fass = hitask1.toFixed(2);
+    } else if (jk == 24) {
+        fass = hitask2.toFixed(2);
+    } else if (jk == 36) {
+        fass = hitask3.toFixed(2);
+    } else if (jk == 48) {
+        fass = hitask4.toFixed(2);
+    } else if (jk == 60) {
+        fass = hitask5.toFixed(2);
+    } else if (jk == 72) {
+        fass = hitask6.toFixed(2);
+    } else if (jk == 84) {
+        fass = hitask7.toFixed(2);
+    } else if (jk == 96) {
+        fass = hitask8.toFixed(2);
+    } else {
+        fass = 0;
+    }
+    document.getElementById('fass').innerHTML = addCommas(fass);
+
+    var asr1 = 0.4300;
+    var asr2 = 0.5680;
+    var asr3 = 0.7100;
+    var asr4 = 0.8880;
+    var asr5 = 1.2900;
+    var asr6 = 1.4190;
+    var asr7 = 1.5180;
+    var asr8 = 1.6700;
+    var asrh1 = (asr1 * tb) / 100;
+    var asrh2 = (asr2 * tb) / 100;
+    var asrh3 = (asr3 * tb) / 100;
+    var asrh4 = (asr4 * tb) / 100;
+    var asrh5 = (asr5 * tb) / 100;
+    var asrh6 = (asr6 * tb) / 100;
+    var asrh7 = (asr7 * tb) / 100;
+    var asrh8 = (asr8 * tb) / 100;
+ 
 
      if (jk == 12) {
         relia = asrh1.toFixed(2);
@@ -453,22 +1172,16 @@ function process(e)
     } else {
         relia = asrh1.toFixed(2);
     }
-    document.getElementById('relia').innerHTML = addCommas(relia);
 
-    document.getElementById('jm').innerHTML = jns_mbl;
-    document.getElementById('jk').innerHTML = jk_wkt;
-    document.getElementById('mk').innerHTML = merk;
-    document.getElementById('pk').innerHTML = pekerjaan;
-    document.getElementById('price').innerHTML = addCommas(pricelist);
-    document.getElementById('disc').innerHTML = addCommas(discount);
-    document.getElementById('otr').innerHTML = addCommas(otr);
-    document.getElementById('um').innerHTML = addCommas(um);
-    document.getElementById('tb').innerHTML = addCommas(tb);
+    document.getElementById('relia').innerHTML = addCommas(relia);
     document.getElementById('adm').innerHTML = addCommas(adm);
     document.getElementById('poll').innerHTML = addCommas(poll);
 
-    var tdp = um + parseInt(ass) + parseInt(relia) + adm + poll;
+    var tdp = um + parseInt(fass) + parseInt(relia) + adm + poll;
     document.getElementById('tdp').innerHTML = addCommas(tdp);
+
+
+
 
 }
 
