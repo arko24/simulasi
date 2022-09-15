@@ -537,6 +537,9 @@ function process(e)
     var efr3a = 0.0775 / 12;  
     var efr4a = 0.0615 / 12;  
     var efr5a = 0.0755 / 12;  
+    var efr6a = 0.09550 / 12;  
+
+
 
 
     var preva1 = (pmt / efr1 *(1 - Math.pow(1 + efr1, -(jkwt - 36)))).toFixed(2);
@@ -553,7 +556,6 @@ function process(e)
     var preva12 = (pmt / efr11 *(1 - Math.pow(1 + efr11, -(jkwt - 120)))).toFixed(2);
     var preva13 = (pmt / efr8 *(1 - Math.pow(1 + efr8, -(jkwt - 120)))).toFixed(2);
     var preva14 = (pmt / efr12 *(1 - Math.pow(1 + efr12, -(jkwt - 24)))).toFixed(2);
-    var preva14 = (pmt / efr12 *(1 - Math.pow(1 + efr12, -(jkwt - 24)))).toFixed(2);
     var preva15 = (pmt / efr3 *(1 - Math.pow(1 + efr3, -(jkwt - 24)))).toFixed(2);
     var preva16 = (pmt / efr13 *(1 - Math.pow(1 + efr13, -(jkwt - 36)))).toFixed(2);
 
@@ -563,8 +565,9 @@ function process(e)
     var pvif3a = Math.pow(1 + efr1a, jkwt - 96);
     var pvif3b = Math.pow(1 + efr2a, jkwt - 96);
     var pvif4a = Math.pow(1 + efr2a, jkwt - 120);
-    var pvif5a = Math.pow(1 + efr4a, jkwt - 24);
-    var pvif6a = Math.pow(1 + efr5a, jkwt - 36);
+    var pvif5a = Math.pow(1 + efr3a, jkwt - 24);
+    var pvif6a = Math.pow(1 + efr4a, jkwt - 24);
+    var pvif7a = Math.pow(1 + efr5a, jkwt - 36);
 
 
     var pmt1a = ((- efr1a * (preva1 * pvif1a + 0) / (pvif1a - 1)) * -1).toFixed(2);
@@ -583,8 +586,8 @@ function process(e)
     var pmt12a = ((- efr2a * (preva12 * pvif4a + 0) / (pvif4a - 1)) * -1).toFixed(2);
     var pmt13a = ((- efr2a * (preva13 * pvif4a + 0) / (pvif4a - 1)) * -1).toFixed(2);
     var pmt14a = ((- efr3a * (preva14 * pvif5a + 0) / (pvif5a - 1)) * -1).toFixed(2);
-    var pmt15a = ((- efr4a * (preva15 * pvif5a + 0) / (pvif5a - 1)) * -1).toFixed(2);
-    var pmt16a = ((- efr5a * (preva16 * pvif6a + 0) / (pvif6a - 1)) * -1).toFixed(2);
+    var pmt15a = ((- efr4a * (preva15 * pvif6a + 0) / (pvif6a - 1)) * -1).toFixed(2);
+    var pmt16a = ((- efr5a * (preva16 * pvif7a + 0) / (pvif7a - 1)) * -1).toFixed(2);
 
 
 
@@ -630,7 +633,38 @@ function process(e)
    
     document.getElementById('pmta').innerHTML = addCommas(pmta);
 
-    var pmtb = pmta
+   var pmtb = pmta
+    	    	
+
+   var preta5 = (pmtb / efr1a *(1 - Math.pow(1 + efr1a, -(jkwt - 120)))).toFixed(2);
+   var preta6 = (pmtb / efr2a *(1 - Math.pow(1 + efr2a, -(jkwt - 156)))).toFixed(2);
+   var preta7 = (pmtb / efr2a *(1 - Math.pow(1 + efr2a, -(jkwt - 180)))).toFixed(2);
+   var preta8 = (pmtb / efr3a *(1 - Math.pow(1 + efr3a, -(jkwt - 60)))).toFixed(2);
+   var preta9 = (pmtb / efr4a *(1 - Math.pow(1 + efr4a, -(jkwt - 60)))).toFixed(2);
+   var preta10 = (pmtb / efr5a *(1 - Math.pow(1 + efr5a, -(jkwt - 72)))).toFixed(2);
+
+
+   var pvit2a = Math.pow(1 + efr2a, jkwt - 120);
+   var pvit3a = Math.pow(1 + efr2a, jkwt - 156);
+   var pvit4a = Math.pow(1 + efr2a, jkwt - 180);
+   var pvit5a = Math.pow(1 + efr1a, jkwt - 60);
+   var pvit5b = Math.pow(1 + efr2a, jkwt - 60);
+   var pvit6a = Math.pow(1 + efr1a, jkwt - 60);
+   var pvit6b = Math.pow(1 + efr2a, jkwt - 60);
+   var pvit7a = Math.pow(1 + efr6a, jkwt - 72);
+
+
+
+   pmta5a = ((- efr2a * (preta5 * pvit2a + 0) / (pvit2a - 1)) * -1).toFixed(2);
+   pmta6a = ((- efr2a * (preta6 * pvit3a + 0) / (pvit3a - 1)) * -1).toFixed(2);
+   pmta7a = ((- efr2a * (preta7 * pvit4a + 0) / (pvit4a - 1)) * -1).toFixed(2);
+   pmta8a = ((- efr1a * (preta8 * pvit5a + 0) / (pvit5a - 1)) * -1).toFixed(2);
+   pmta8b = ((- efr2a * (preta8 * pvit5b + 0) / (pvit5b - 1)) * -1).toFixed(2);
+   pmta9a = ((- efr1a * (preta9 * pvit6a + 0) / (pvit6a - 1)) * -1).toFixed(2);
+   pmta9b = ((- efr2a * (preta9 * pvit6b + 0) / (pvit6b - 1)) * -1).toFixed(2);
+   pmta10a = ((- efr6a * (preta10 * pvit7a + 0) / (pvit7a - 1)) * -1).toFixed(2);
+
+
 
     if (prog3 == 1 && jkwt > 72) {
         pmtc = pmtb;
@@ -640,6 +674,34 @@ function process(e)
         pmtc = pmt3a;
     } else if (prog3 == 4 && jkwt > 84) {
         pmtc = pmt4a;
+    } else if (prog3 == 5 && jkwt > 120) {
+        pmtc = pmta5a;
+    } else if (prog3 == 6 && jkwt > 120) {
+        pmtc = pmta5a;
+    } else if (prog3 == 7 && jkwt > 120) {
+        pmtc = pmta5a;
+    } else if (prog3 == 8 && jkwt > 120) {
+        pmtc = pmta5a;
+    } else if (prog3 == 9 && jkwt > 156) {
+        pmtc = pmta6a;
+    } else if (prog3 == 10 && jkwt > 156) {
+        pmtc = pmta6a;
+    } else if (prog3 == 11 && jkwt > 156) {
+        pmtc = pmta6a;
+    } else if (prog3 == 12 && jkwt > 180) {
+        pmtc = pmta7a;
+    } else if (prog3 == 13 && jkwt > 168) {
+        pmtc = pmta7a;
+    } else if (prog3 == 14 && jkwt > 60 && jkwt < 132) {
+        pmtc = pmta8a;
+    } else if (prog3 == 14 && jkwt > 120) {
+        pmtc = pmta8b;
+    } else if (prog3 == 15 && jkwt == 120) {
+        pmtc = pmta9a;
+    } else if (prog3 == 15 && jkwt > 120) {
+        pmtc = pmta9b;
+    } else if (prog3 == 16 && jkwt > 84) {
+        pmtc = pmta10a;
     } else {
         pmtc = " ";
     }
